@@ -1,0 +1,57 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="login_body">
+ <section class="list">
+  <article>
+    <div class="regform" style="padding-top: 20px;">
+      <form action="{yun:}$config_wapdomain{/yun}/index.php?c=login" method="post" onsubmit="return mlogin(this);">
+        <input name="usertype" type="hidden" value="{yun:}$smarty.get.usertype{/yun}"/>
+        <input name="wxid" type="hidden" value="{yun:}$smarty.get.wxid{/yun}"/>
+        {yun:}if $smarty.get.job{/yun}<input name="job" type="hidden" value="{yun:}$smarty.get.job{/yun}"/>{yun:}/if{/yun}
+        <dl class="forminputitem">
+          <dd>
+            <div class="c inputitem_w">
+              <i class="reg_icon_font "></i>
+              <input name="username" type="text" id="username" value="{yun:}$smarty.get.username{/yun}" placeholder="邮箱/手机号/用户名" class="inputitemtxt">
+            </div>
+          </dd>
+          <dd>
+            <div class="c ico_eye_close inputitem_w">
+            <i class="reg_icon_font "></i>
+              <input name="password" type="password" id="password"  class="inputitemtxt" placeholder="请输入密码" >
+              <em class="viewpwd" id="showPwd" onclick="showPwd(this)"></em> </div>
+          </dd>
+          <dd> <span class="photochk">
+            <input type="checkbox" name="longLogin" id="longLogin" class="inputChk">
+            <em class="blue">自动登录</em> </span> <a href="{yun:}url m=wap c=forgetpw{/yun}" class="getpwd">忘记密码</a> </dd>
+          <dd>
+            <input type="submit" name="submit"  value="登录" class="inputSubmit">
+          </dd>
+        </dl>
+      </form>
+    </div>
+    {yun:}if $config.sy_qqlogin==1 || $config.sy_sinalogin==1{/yun}
+    <div class="login_other">
+    <span class="login_other_span">其他方式登录</span>
+	 {yun:}if $config.sy_sinalogin==1{/yun}
+    <a href="{yun:}url m=sinaconnect{/yun}" title="sina" class="login_other_icon login_other_xl"><i class="iconfont_sina"></i></a>
+	 {yun:}/if{/yun}
+	  {yun:}if $config.sy_qqlogin==1{/yun}
+    <a href="{yun:}$config.sy_weburl{/yun}/qqlogin.php" title="QQ"   class="login_other_icon login_other_qq"><i class="iconfont_qq"></i></a>
+	 {yun:}/if{/yun}
+{yun:}if $config.sy_wxlogin==1{/yun}
+         <a href="{yun:}url m=wxconnect{/yun}" title="wx"   class="login_other_icon login_other_wx"><i class="iconfont_wx"></i></a>
+ {yun:}/if{/yun}
+    </div>
+	{yun:}/if{/yun}
+  </article>
+  <div class="userloginreg">
+    <p> 还没有账号？马上加入{yun:}$config.sy_webname{/yun} </p>
+    <div class="login_pr">
+         <ul>
+             <li><a href="{yun:}url m=wap c=register usertype=2{/yun}" class="regperson">企业注册</a></li> 
+             <li><a href="{yun:}url m=wap c=register{/yun}" class="regperson">个人注册</a></li>
+         </ul>
+    </div>
+</section>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

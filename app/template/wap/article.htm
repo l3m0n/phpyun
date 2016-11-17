@@ -1,0 +1,100 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+ <script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/search.js" language="javascript"></script>
+ <script type="text/javascript">
+  function zhankaiShouqi(control){
+	 
+	$(control).parent().find('.news_Category_a:gt(6)').slideToggle();
+	$(control).parent().find('.news_Category_line:gt(6)').slideToggle();
+	if($(control).html()=='更多'){
+		$(control).html('收起');
+		
+	}else{
+		$(control).html('更多');
+		
+	}
+}
+ </script>
+ <script type="text/javascript"> 
+$(function() { 
+var $keyword = $("#keyword").val() 
+setHeightKeyWord('fontshow', $keyword, 'Red', true) 
+}); 
+function setHeightKeyWord(id, keyword, color, bold) { 
+if (keyword == "") 
+return; 
+var tempHTML = $("#" + id).html(); 
+var htmlReg = new RegExp("\<.*?\>", "i"); 
+var arrA = new Array(); 
+for (var i = 0; true; i++) { 
+var m = htmlReg.exec(tempHTML); 
+if (m) { 
+arrA[i] = m; 
+} 
+else { 
+break; 
+} 
+tempHTML = tempHTML.replace(m, "[[[[" + i + "]]]]"); 
+} 
+var replaceText 
+if (bold) 
+replaceText = "<b style='color:" + color + ";'>$1</b>"; 
+else 
+replaceText = "<font style='color:" + color + ";'>$1</font>"; 
+var arrayWord = keyword.split(','); 
+for (var w = 0; w < arrayWord.length; w++) { 
+var r = new RegExp("(" + arrayWord[w].replace(/[(){}.+*?^$|\\\[\]]/g, "\\$&") + ")", "ig"); 
+tempHTML = tempHTML.replace(r, replaceText); 
+} 
+for (var i = 0; i < arrA.length; i++) { 
+tempHTML = tempHTML.replace("[[[[" + i + "]]]]", arrA[i]); 
+} 
+$("#" + id).html(tempHTML); 
+} 
+</script>
+<div class="news_in_body">
+<section>
+<div class="news_Category" >
+{yun:}foreach from=$one_class item=v key=j{/yun}
+<a href="{yun:}url m=wap c=article nid='`$v.id`'{/yun}" class="news_Category_a"  style="{yun:}if $j>6&&!$row.id{/yun}display:none{yun:}/if{/yun}" >
+<span>{yun:}$v.name{/yun}</span> </a><span class="news_Category_line" style="margin-top:0px; {yun:}if $j>6&&!$one_class.id{/yun}display:none{yun:}/if{/yun}">|</span>
+{yun:}/foreach{/yun}
+<a href="javascript:void(0);" class="news_Category_more" onclick="zhankaiShouqi(this);">{yun:}if !$one_class.id{/yun}更多{yun:}else{/yun}收起{yun:}/if{/yun}</a>
+</div>
+<div class="news_Category">
+{yun:}foreach from=$two_class[$smarty.get.nid] item=val key=j{/yun}
+<a href="{yun:}url m=wap c=article nid='`$val.id`'{/yun}" class="news_Category_a"><span>{yun:}$val.name{/yun}</span> </a><span class="news_Category_line" style="margin-top:0px; {yun:}if $j>3&&!$two_class.id{/yun}display:none{yun:}/if{/yun}">|</span>
+{yun:}/foreach{/yun}
+</div>
+  </section>
+  	  <section class="search_cont">  <form method="get" action="index.php?c=article">
+    <input name='m' value="wap" type="hidden"><input name='c' value="article" type="hidden">
+      <div class="formFiled">
+        <input type="text" value="{yun:}$smarty.get.keyword{/yun}" id="keyword" name="keyword" class="input_search" placeholder="请输入文章关键字">
+        <input type="submit" value=" " class="input_btn"> <i class="input_btn_icon iconfont"></i>
+      </div>
+    </form>  </section>  
+<section class="news_in_cont" id="fontshow">
+
+{yun:}article  nid='auto.nid' keyword='auto.keyword' ispage=1 urlstatic=1 limit=10  t_len=30 item=item{/yun}
+   <div class="news_in_list">
+    <h2><a href="{yun:}url m=wap c=article a=show id='`$item.id`'{/yun}">{yun:}$item.title{/yun}</a></h2>
+    <div class="news_in_list_p">{yun:}$item.description|mb_substr:0:38:'gbk'{/yun}...</div>
+    <div class="news_in_list_date">{yun:}$item.time{/yun}<span class="news_in_list_k">{yun:}$item.author{/yun}</span></div>
+    </div>
+    {yun:}/article{/yun}
+   <div class="pages">{yun:}$pagenav{/yun}</div>
+   <div class="clear"></div>
+   <div>
+   </div>
+</section>
+<div class="news_in_tit">分类浏览</div>
+<div class="clear"></div>
+    <div class="news_in_tag ">
+    {yun:}articleclass item=v{/yun}
+     <a href="{yun:}url m=wap c=article nid='`$v.id`'{/yun}">{yun:}$v.name{/yun} </a>
+    {yun:}/articleclass{/yun}
+    </div>
+<div class="clear"></div>
+</div>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

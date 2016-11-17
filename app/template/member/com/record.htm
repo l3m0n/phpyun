@@ -1,0 +1,71 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <link href="{yun:}$comstyle{/yun}/images/index_style.css" type=text/css rel=stylesheet>
+    <div class=right_box>
+      <div class=admincont_box>
+                <div class="com_tit">
+       <span class="com_tit_span">网站推荐的人才</span>
+        </div>
+        <div class="com_body">
+       
+        <div class=admin_textbox_04>
+          <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+          <form action="{yun:}$now_url{/yun}&act=del" target="supportiframe" method="post" id='myform'>
+            <div class=table>
+              <div id="job_checkbokid" >
+              {yun:}if $rows{/yun}
+                <div class="job_news_list job_news_list_h1"> 
+                <span class="job_news_list_span job_w30">&nbsp;</span> 
+                <span class="job_news_list_span job_w155" style="text-align:left">推送的职位</span>
+                <span class="job_news_list_span job_w100">姓名</span> 
+                <span class="job_news_list_span job_w160">求职意向</span> 
+                <span class="job_news_list_span job_w80">工作经验</span> 
+                <span class="job_news_list_span job_w100">期望薪资</span> 
+                <span class="job_news_list_span job_w100">推送时间</span> 
+                <span class="job_news_list_span job_w100">操作</span> 
+                </div>
+                {yun:}foreach item=v from=$rows{/yun}
+                <div class="job_news_list"> 
+					<span class="job_news_list_span job_w30">
+					<input type="checkbox" name="delid[]" value="{yun:}$v.id{/yun}"   class="com_Release_job_qx_check" style="margin-top:2px;"> </span>
+				  <span class="job_news_list_span job_w155" style="text-align:left">
+					<a href="{yun:}url m=job c=comapply id='`$v.jobid`'{/yun}" target=_blank>{yun:}$v.job_name{/yun}&nbsp;</a>
+				</span> 
+                <span class="job_news_list_span job_w100">&nbsp;<a href="{yun:}url m=resume c=show id='`$v.eid`'{/yun}" target=_blank>{yun:}$v.user_name{/yun}</a></span> 
+				<span class="job_news_list_span job_w160">&nbsp;<span class="yxjob_name">{yun:}$v.jobclassidname{/yun}</span></span> 
+				<span class="job_news_list_span job_w80">&nbsp;{yun:}$v.exp{/yun}</span> 
+				<span class="job_news_list_span job_w100">&nbsp;{yun:}$v.salary{/yun}</span> 
+				<span class="job_news_list_span job_w100">&nbsp;{yun:}$v.ctime|date_format:'%Y-%m-%d'{/yun}</span> 
+				
+				<span class="job_news_list_span job_w100"> 
+					{yun:}if $v.userid_msg==1{/yun} 
+						<font color="red">已邀请</font> 
+					{yun:}else{/yun}  
+						<a href="javascript:;" uid="{yun:}$v.uid{/yun}" username="{yun:}$v.name{/yun}" class="sq_resume">邀请面试</a> 
+					{yun:}/if{/yun}
+                  &nbsp;|&nbsp;
+				  <a href="javascript:void(0)" onclick="layer_del('确定删除该条信息？', 'index.php?c=record&act=del&del={yun:}$v.id{/yun}'); ">删除</a> 
+				 </span>
+				</div>
+                {yun:}/foreach{/yun}
+                <div class="com_Release_job_bot"> <span class="com_Release_job_qx">
+                  <input id='checkAll'  type="checkbox" onclick='m_checkAll(this.form)'class="com_Release_job_qx_check">
+                  全选</span>
+                  <INPUT  class="c_btn_02" type="button" name="subdel" value="批量删除" onclick="return really('delid[]');">
+                </div>
+                {yun:}else{/yun}
+                <div class="msg_no">您还没有推送的人才。</div>
+                {yun:}/if{/yun} </div>
+            </div>
+            <div class="diggg mt10 fltR">{yun:}$pagenav{/yun}</div>
+            <div class="clear"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{yun:}include file="$comstyle/yqms.htm"{/yun}
+{yun:}include file="$comstyle/footer.htm"{/yun}

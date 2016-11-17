@@ -1,0 +1,21 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+{yun:}include file="$wapstyle/nav.htm"{/yun} 
+{yun:}qlist item=list uid='auto.uid' ispage=1 t_len=20  limit=10{/yun}
+<div class="askfriend_ct">
+  <div class="question_tit"><a href="{yun:}url m=wap c=ask a=content id='`$list.id`'{/yun}">{yun:}$list.title|mb_substr:0:18:'gbk'{/yun}</a></div>
+  <div class="question_gz"> <span class="question_gz_d"><i>{yun:}$list.atnnum{/yun}</i>人关注</span> <span class="question_gz_a"><i>{yun:}$list.answer_num{/yun}</i>个回答</span> <span class="question_gz_c"><i>{yun:}$list.visit{/yun}</i>次浏览</span> </div>
+  <div class="question_mm">
+    <div class="question_tm">{yun:}$list.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+    {yun:}if $uid==$list.uid{/yun}
+    <div class="question_de"><a href="javascript:void(0)" onclick="layer_del('确定要删除该提问？','{yun:}url m=wap c=ask a=delask id=$list.id{/yun}')">删除</a></div>
+    {yun:}/if{/yun}
+  </div>
+</div>
+{yun:}/qlist{/yun}   
+
+{yun:}if $total==0{/yun}
+<div class="noresult"><a href="{yun:}url m=wap c=ask a=addquestion {/yun}">您还没有任何问题，抓紧提问吧！</a></div>
+{yun:}else{/yun} 
+<div class="pages">{yun:}$pagenav{/yun}</div> 
+{yun:}/if{/yun} 
+{yun:}include file="$wapstyle/footer.htm"{/yun}

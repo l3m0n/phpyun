@@ -1,0 +1,44 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<script>   
+function checkidcard(){
+	var image=$("#image").val();
+	var idcard=$("#idcard").val();
+	if(idcard==''){
+		layermsg("请填写身份证号！");return false;   
+	}
+	var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+	if(reg.test(idcard) === false){  
+       layermsg("身份证号格式错误！");return false;     
+	}  
+	if(image==''){
+		layermsg("请上传证件照！");return false;   
+	}
+}
+</script>   
+<form id="resumeInfo" action="index.php?c=idcard" method="post" onsubmit="return checkidcard();"  enctype="multipart/form-data">
+  <div class="main_member_cot_box"> 
+  <div class="wap_member_comp_h1"><span>身份认证</span></div>
+  <div class="wap_member_Receive">
+       <dl class="resume-cont_wate_list">
+        <dt><span class="resume-cont_wate_bj">*</span>身份证号</dt>
+        <dd>
+          <div class="bd_box_bor"><input type="text" name="idcard" id="idcard" value="{yun:}$resume.idcard{/yun}" class="bd_box_bor_text"></div>
+        </dd>
+		</dl> 
+		<dl class="resume-cont_wate_list">
+        <dt><span class="resume-cont_wate_bj">*</span>证件照</dt>
+        <dd>
+          <input id="image" name="file" type="file" accept="image/*">
+        </dd>
+		</dl>
+   
+		<dl class="resume-cont_wate_list"> 
+        <dd>
+        	<input type="hidden" name="eid" id="eid" value="{yun:}$smarty.get.eid{/yun}">
+          <input type="submit" name="submit" value="保存" class="reinputText2">
+        </dd>
+      </dl>     
+	</div>
+</div>
+</form>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

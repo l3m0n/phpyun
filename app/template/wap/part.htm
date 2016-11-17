@@ -1,0 +1,72 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+   <script src="{yun:}$config.sy_weburl{/yun}/app/template/wap/js/search.js" language="javascript"></script>
+<section>
+  <div class="searchOptions clearfix partwork_nav">
+    <ul class="searchOptions_list ">
+      <li onclick="checkshowjob('city');"><a href="javascript:void(0);" class="searchOptions_list_a">{yun:}if $city_name[$smarty.get.cityid] || $city_name[$smarty.get.provinceid]{/yun}{yun:}$city_name[$smarty.get.cityid]{/yun}{yun:}$city_name[$smarty.get.provinceid]{/yun}{yun:}elseif $city_name[$smarty.get.three_cityid]{/yun}{yun:}$city_name[$smarty.get.three_cityid]{/yun}{yun:}elseif $config.cityid&&$config.sy_web_site=='1'{/yun}{yun:}$city_name[$config.cityid]{/yun}{yun:}else{/yun}兼职区域{yun:}/if{/yun}<i class="searchOptions_icon"></i></a></li>
+      <li onclick="show_div('open')"><a href="javascript:void(0);" class="searchOptions_list_a">{yun:}if $partclass_name[$smarty.get.type]{/yun}{yun:}$partclass_name[$smarty.get.type]{/yun}{yun:}else{/yun}兼职类型{yun:}/if{/yun}<i class="searchOptions_icon"></i></a></li>
+      <li onclick="show_div('open1')" style="border-right:none;"><a href="javascript:void(0);" class="searchOptions_list_a">{yun:}if $partclass_name[$smarty.get.cycle]{/yun}{yun:}$partclass_name[$smarty.get.cycle]{/yun}{yun:}else{/yun}结算周期{yun:}/if{/yun}<i class="searchOptions_icon"></i></a></li>
+      <input type="hidden" id="searchurl" value="{yun:}$searchurl{/yun}" />
+      <input type="hidden" id="waptype" value="1" />
+      </ul>
+
+     <div class="job_pop_box openlist" id="open">
+      <ul class="job_pop_pay_list">
+        {yun:}foreach from=$partdata.part_type item=v{/yun}
+        <li><a href="{yun:}searchurl m=wap c=part type=$v untype='type'{/yun}">{yun:}$partclass_name[$v]{/yun}</a></li>
+        {yun:}/foreach{/yun}
+      </ul>
+    </div>
+     <div class="job_pop_box openlist" id="open1">
+      <ul class="job_pop_pay_list">
+        {yun:}foreach from=$partdata.part_billing_cycle item=v{/yun}
+        <li><a href="{yun:}searchurl m=wap c=part cycle=$v untype='cycle'{/yun}">{yun:}$partclass_name[$v]{/yun}</a></li>
+        {yun:}/foreach{/yun}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="warp_content clear">
+
+        <div class="job_list_content">
+        
+          {yun:}partlist item=partlist ispage=1 limit=10 billing_cycle='auto.cycle' provinceid='auto.provinceid' cityid='auto.cityid' three_cityid='auto.three_cityid' type='auto.type' keyword='auto.keyword'{/yun}
+          
+           <div class="job_list_box"> 
+           <a href="{yun:}url m=wap c=part a=show id=$partlist.id{/yun}">
+            <div class="Part-time_job">
+            <div class="Part-time_left Part-time_left_b">
+            <div class="Part-time_name">{yun:}$partlist.job_billing_cycle{/yun}</div>
+            <div class="Part-time_job_fl">{yun:}$partlist.job_type{/yun}</div>
+            </div>
+             <div class="Part-time_job_name">{yun:}$partlist.name{/yun}</div> 
+            <div class="Part-time_job_js"> 
+            <span class="Part-time_job_js_span"><i class="Part-time_job_js_city iconfont_partcity"></i>{yun:}$partlist.job_city_two{/yun}-{yun:}$partlist.job_city_three{/yun}</span>
+            <span class="Part-time_job_js_span"><i class="Part-time_job_js_city iconfont_partdate"></i>{yun:}if $partlist.time=='今天' || $partlist.time=='昨天'{/yun}
+          <span style="color:red;">{yun:}$partlist.time{/yun}</span>
+          {yun:}else{/yun}
+          {yun:}$partlist.time{/yun}
+          {yun:}/if{/yun}</span> </div> 
+                  <div class="Part-time_job_js"> 
+             <span class="Part-time_job_js_span "><i class="Part-time_job_js_doc">￥</i><em class="Part-time_job_js_span_jg">{yun:}$partlist.salary{/yun}{yun:}$partlist.job_salary_type{/yun}</em></span>
+             </div>
+            </div></a>
+           </div>           
+           {yun:}/partlist{/yun}
+            {yun:}if $total<=0{/yun}
+            {yun:}if $smarty.get.keyword!="" {/yun}
+            <div class="wap_member_no">没有搜索到兼职</div>
+            {yun:}else{/yun}
+            <div class="wap_member_no">暂无兼职</div>
+            {yun:}/if{/yun}
+            {yun:}else{/yun}
+            <div class="pages">{yun:}$pagenav{/yun}</div>
+            {yun:}/if{/yun}         
+      </div>
+  </div>
+</section>
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/app/template/wap/css/wap_tck.css" type="text/css">
+{yun:}include file="$wapstyle/public.htm"{/yun}
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

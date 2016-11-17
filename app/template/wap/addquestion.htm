@@ -1,0 +1,48 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<div class="tw">
+
+
+    <div class="tw_bx_list" style="margin-top:10px;"> 
+    
+      <div class="tw_bx_z tw_bx_z_rf"> 
+		<span style="width:100%;float:left;">请选择问题种类</span>
+      
+        <div class="tw_bx_list_down" style="display:none">
+        <div class="quiz_box_first">		
+          <ul>
+            {yun:}qcache  item=qclist{/yun}
+            <li class="qc{yun:}$qclist.id{/yun}"><a href="javascript:void(0)" onclick="getclass('{yun:}$qclist.id{/yun}','{yun:}$qclist.name{/yun}','{yun:}url m=wap c=ask a=qclass{/yun}')">{yun:}$qclist.name{/yun}</a></li>
+            {yun:}/qcache{/yun}
+          </ul>         
+        </div>
+        
+        <div class="quiz_box_second">         
+          <ul class="quiz_select"></ul>
+        </div>
+        
+        <input name='cid' type='hidden' value=''>
+      </div></div>
+      <div class="tw_bx_tit_box_s">
+      <input class="tw_bx_tit" type="text" name="title" id="title" placeholder="请输入问题标题">
+      </div>
+      <div class="tw_bx_tit_box_textarea">
+      <textarea class="tw_area" placeholder="您可以详细描述你的问题" name="content" id='content'></textarea>
+      </div>
+       {yun:}if strpos($config.code_web,"职场提问")!==false{/yun}
+      <div class="tw_bx_tit_box_s">
+     
+    
+        <input class="tw_bx_tit" id="ask_CheckCode" type="text" placeholder="请输入验证码" name="authcode" maxlength="4"/>
+        <div class="tw_img"> <img id="vcode_img" class="authcode" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" onclick="check_code();"/>
+      </div>
+      
+      </div>
+      {yun:}/if{/yun}
+      <div class="tw_button">
+        <input class="tw_ok" type="submit" name="submit" value="确认发起" onclick="checkform();"/>
+      </div>
+    </div>
+
+</div>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

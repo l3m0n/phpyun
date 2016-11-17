@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{yun:}$title{/yun}</title>
+<meta name="keywords" content="{yun:}$keywords{/yun}"/>
+<meta name="description" content="{yun:}$description{/yun}"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css" type="text/css"/>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js"></script>
+<script>
+DD_belatedPNG.fix('.png,.car_time,.car_the_time,.car_the_add,.car_the_per,.car_state');
+</script>
+<![endif]-->
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layer/layer.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/yun_job_fairs.css" type="text/css"/>
+</head>
+<body>
+{yun:}include file="$tplstyle/header.htm"{/yun}
+<div class="yun_content">
+  <div class="current_Location png"> 您当前的位置：<a href="{yun:}$config.sy_weburl{/yun}">{yun:}$config.sy_webname{/yun}</a> > <a href="{yun:}url m=zph{/yun}">招聘会</a> > 往期回顾 </div>  
+  {yun:}fairs item=zphs limit=10 ispage=1 state=3{/yun}
+  {yun:}if $zphs.etime<'0'{/yun}
+  <div class="career careered">
+    <div class="career_coned">
+      <div class="car_time car_timeed">
+        <p>星期{yun:}$zphs.week{/yun}</p>
+        <h3>{yun:}$zphs.starttime|date_format:"%d"{/yun}</h3>
+        <span>{yun:}$zphs.starttime|date_format:"%Y年%m月"{/yun}</span> </div>
+      <div class=" car_themed">
+        <h3><a href="{yun:}url m=zph c=show id='`$zphs.id`'{/yun}"> {yun:}$zphs.title{/yun}</a></h3>
+        <p>主办：{yun:}$zphs.organizers{/yun}</p>
+      </div>
+     
+      <div class="car_order car_ordered">
+        <div class="car_order_con car_order_coned">
+            <a href="{yun:}url m=zph c=show id=$zphs.id{/yun}" class="car_ord_coed seek_chqy">查看详情</a>
+        </div>
+      </div>
+    </div>
+    <div class="car_state car_finish"></div>
+  </div>
+  {yun:}/if{/yun}
+  {yun:}/fairs{/yun}
+
+{yun:}if !$total{/yun} 
+<div class="seachno">
+        <div class="seachno_left"><img src="{yun:}$style{/yun}/images/search-no.gif"></div>
+        <div class="listno-content"> <strong>很抱歉，没有找到满足条件的招聘会</strong><br>
+	 </div>
+</div>
+{yun:}else{/yun}</div>
+<div class="clear"></div>
+<div class="search_pages">
+  <div class="pages">{yun:}$pagenav{/yun}</div>
+</div>
+{yun:}/if{/yun}
+
+</div>
+{yun:}include file="$tplstyle/footer.htm"{/yun}

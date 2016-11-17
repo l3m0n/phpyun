@@ -1,0 +1,210 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}  
+<script src="{yun:}$wap_style{/yun}/js/reg_ajax.js" language="javascript"></script>
+<div class="reg_t_other"><a href="{yun:}url m=wap c=register usertype=2{/yun}">企业注册</a></div>
+<section class="list">
+  <article>
+    <div class="regform">
+      <ul class="regtab">
+        <li class="yh_reg_tit_qh {yun:}if $smarty.get.reg!='2'{/yun}current{yun:}/if{/yun}"><a href="{yun:}url m=wap c=register{/yun}">个人注册</a></li>
+        {yun:}if $config.reg_fast=='1'{/yun}
+        <li class="yh_reg_tit_qh {yun:}if $smarty.get.reg=='2'{/yun}current{yun:}/if{/yun}"><a href="{yun:}url m=wap c=register reg=2{/yun}">快速注册</a></li>
+        {yun:}/if{/yun}
+      </ul>
+      {yun:}if $smarty.get.reg!="2"{/yun}
+      <form method="post" action="{yun:}$config_wapdomain{/yun}/index.php?c=register" onsubmit="return checkRegUser(this);" autocomplete="off">
+        <input name="regway" id="regway1" type="hidden" value="1"/>
+        <input name="usertype" id="usertype" type="hidden" value="1"/>
+        <dl class="forminputitem">
+		<dd >
+            <div class="c ico_name inputitem_w">
+            <i class="reg_icon_font iconfont"></i>
+              <input class="inputitemtxt" placeholder="用户名" name="username" id="username" type="text" onblur="check_username();">
+            </div>
+          </dd>
+		  <dd>
+            <div class="c ico_pwd2 inputitem_w">
+             <i class="reg_icon_font iconfont"></i>
+              <input class="inputitemtxt" onfocus="this.type='password'" placeholder="填写密码" name="password" id="password" type="text">
+              <em class="viewpwd"></em></div>
+          </dd>
+		  {yun:}if $config.reg_passconfirm=='1'{/yun}
+		  <dd>
+            <div class="c ico_pwd2 inputitem_w">
+             <i class="reg_icon_font iconfont"></i>
+              <input class="inputitemtxt" onfocus="this.type='password'" placeholder="确认密码" name="passconfirm" id="passconfirm" type="text">
+              <em class="viewpwd"></em></div>
+          </dd>
+		  {yun:}/if{/yun}
+
+          {yun:}if $config.reg_useremail=='1'{/yun}
+          <dd>
+            <div class="c inputitem_w ico_email">
+            <i class="reg_icon_font iconfont"></i>
+              <input class="inputitemtxt"  placeholder="填写邮箱地址" name="email" id="email" type="text" onblur="check_email()">
+            </div>
+          </dd>
+          {yun:}/if{/yun}
+          {yun:}if $config.reg_usertel=='1'{/yun}
+          <dd >
+            <div class="c ico_name inputitem_w">
+            <i class="reg_icon_font iconfont"></i>
+              <input class="inputitemtxt" placeholder="填写手机号码" name="moblie" id="moblie" type="text" onblur="check_moblie()" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+            </div>
+          </dd>
+          {yun:}/if{/yun}		   	
+        {yun:}if $config.reg_username=='1'{/yun}
+          <dd >
+            <div class="c ico_name inputitem_w">
+            <i class="reg_icon_font iconfont"></i>
+              <input class="inputitemtxt" placeholder="真实名称" name="name" id="name" type="text">
+            </div>
+          </dd>
+          {yun:}/if{/yun}
+         {yun:}if strpos($config.code_web,"注册会员")!==false{/yun}
+         <dd >
+            <div class="c ico_name inputitem_w">
+              <input class="inputitemtxt" placeholder="填写验证码" name="checkcode1" id="checkcode1" type="text" maxlength="4"/>
+              <div class="rg_img">
+              <img id="vcode_img" class="authcode" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" onclick="check_code();"/>
+              </div>
+            </div>
+          </dd>
+	     {yun:}/if{/yun}
+          <dd><span class="photochk" style="width:100%">
+            <input id="xieyi1" type="checkbox" name="xieyi1" value="1"  class="inputChk" checked="checked">
+            <em style="width:100%">我已阅读并同意《<a href="{yun:}url m=wap c=services{/yun}">{yun:}$config.sy_webname{/yun}人才网注册协议</a>》</em></span></dd>
+          <dd>
+            {yun:}if strpos($config.code_web,"注册会员")!==false{/yun}
+	        <input type="hidden" id="code" value="1" />
+	        {yun:}else{/yun}
+	        <input type="hidden" id="code" value="0" />
+	        {yun:}/if{/yun}
+            <input type="submit" name="submit" value="提交" class="inputSubmit">
+            <a id="reg_url_1" href="{yun:}url m=wap c=register usertype=1{/yun}" class="index_logoin_submit2"></a> <a id="reg_url_2" href="{yun:}url m=wap c=register usertype=2{/yun}" class="index_logoin_submit2" style="display:none"></a> </dd>
+        </dl>
+      </form>
+      {yun:}else{/yun}
+	      {yun:}if $config.reg_fast=='1'{/yun}
+	    
+	     <form method="post" action="{yun:}$config_wapdomain{/yun}/index.php?c=register" onsubmit="return checkRegUser(this);" autocomplete="off">
+	     <input name="regway" id="regway2" type="hidden" value="2"/>
+	     <input name="usertype" id="usertype" type="hidden" value="1"/>
+	     <dl class="forminputitem" id="regtype1"> 
+               <div class="reg_fast_close">
+                <ul> 
+	               <li class="reg_fast_close_li"><a class="reg_fast_close_licur"  onclick="checkreg(1)">手机注册</a></li>  
+	                 <li class="reg_fast_close_li"><a class=" " onclick="checkreg(2)">邮箱注册</a></li>
+                </ul>  
+	       </div> 
+	         <dd >
+	          <div class="c ico_name inputitem_w">
+	                <i class="reg_icon_font iconfont"></i>
+	              <input class="inputitemtxt" placeholder="填写手机号码" name="moblie" id="moblie" onblur="check_moblie();" type="text" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')">
+	            </div>
+	         </dd>
+	         {yun:}if strpos($config.code_web,"注册会员")!==false{/yun}
+	         <dd >
+	            <div class="c ico_name inputitem_w">
+	              <input class="inputitemtxt" placeholder="填写验证码" name="checkcode2" id="checkcode2" type="text" maxlength="4"/>
+                   <div class="rg_img">
+                        <img id="vcode_img" class="authcode" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" onclick="check_code();"/>
+                   </div>
+	            </div>
+	                
+	          </dd>
+		     {yun:}/if{/yun}
+		     <dd >
+	            <div class="c ico_name inputitem_w">
+	                 <input class="inputitemtxt" placeholder="填写短信验证码" name="moblie_code" id="moblie_code" type="text"/>
+	                 <div class="rg_nmb">
+                         <a class="rg_nmb_hq" href="javascript:void(0);" onclick="sendmsg();"><span id="time">获取验证码</span></a>
+                     </div>
+	            </div>
+	          </dd>
+	          <dd>
+	            <div class="c ico_pwd2 inputitem_w">
+	             <i class="reg_icon_font iconfont"></i>
+	              <input class="inputitemtxt" onfocus="this.type='password'" placeholder="填写密码" name="password2" id="password2" type="text">
+	              <em class="viewpwd"></em></div>
+	          </dd>
+			  {yun:}if $config.reg_passconfirm=='1'{/yun}
+			  <dd>
+	            <div class="c ico_pwd2 inputitem_w">
+	             <i class="reg_icon_font iconfont"></i>
+	              <input class="inputitemtxt" onfocus="this.type='password'" placeholder="确认密码" name="passconfirm2" id="passconfirm2"  type="text">
+	              <em class="viewpwd"></em></div>
+	          </dd>
+			  {yun:}/if{/yun}
+			  <dd><span class="photochk" style="width:100%">
+	            <input id="xieyi2" type="checkbox" value="1" class="inputChk" checked="checked">
+	            <em style="width:100%">我已阅读并同意《<a href="{yun:}url m=wap c=services{/yun}">{yun:}$config.sy_webname{/yun}人才网注册协议</a>》</em></span></dd>
+	          <dd>
+	            {yun:}if strpos($config.code_web,"注册会员")!==false{/yun}
+		        <input type="hidden" id="code" value="1" />
+		        {yun:}else{/yun}
+		        <input type="hidden" id="code" value="0" />
+		        {yun:}/if{/yun}
+		        <input type="hidden" id="send" value="0" />
+	            <input type="submit" name="submit" value="提交" class="inputSubmit">
+	          </dd>
+	     </dl>
+	     </form>
+	     <form method="post" action="{yun:}$config_wapdomain{/yun}/index.php?c=register" onsubmit="return checkRegUser(this);" autocomplete="off"> 
+	     <input name="regway" id="regway3" type="hidden" value="3"/>
+	     <input name="usertype" id="usertype" type="hidden" value="1"/>
+	      <dl class="forminputitem" id="regtype2" style="display:none"> 
+           <div class="reg_fast_close">
+                <ul> 
+	               <li class="reg_fast_close_li"><a class=""  onclick="checkreg(1)">手机注册</a></li>  
+	                 <li class="reg_fast_close_li"><a class="reg_fast_close_licur " onclick="checkreg(2)">邮箱注册</a></li>
+                </ul>  
+	       </div>   
+	         <dd >
+	          <div class="c ico_name inputitem_w">
+	                <i class="reg_icon_font iconfont"></i>
+	              <input class="inputitemtxt" placeholder="填写邮箱" name="email" id="email" type="text" onblur="check_email();">
+	            </div>
+	         </dd>
+	        
+	          <dd>
+	            <div class="c ico_pwd2 inputitem_w">
+	             <i class="reg_icon_font iconfont"></i>
+	              <input class="inputitemtxt" onfocus="this.type='password'" placeholder="填写密码" name="password3" id="password3" type="text">
+	              <em class="viewpwd"></em></div>
+	          </dd>
+			  {yun:}if $config.reg_passconfirm=='1'{/yun}
+			  <dd>
+	            <div class="c ico_pwd2 inputitem_w">
+	             <i class="reg_icon_font iconfont"></i>
+	              <input class="inputitemtxt" onfocus="this.type='password'" placeholder="确认密码" name="passconfirm3" id="passconfirm3"  type="text">
+	              <em class="viewpwd"></em></div>
+	          </dd>
+			  {yun:}/if{/yun}
+               {yun:}if strpos($config.code_web,"注册会员")!==false{/yun}
+	         <dd >
+	            <div class="c ico_name inputitem_w">
+                  
+	              <input class="inputitemtxt" placeholder="填写验证码" name="checkcode3" id="checkcode3" type="text" maxlength="4"/>
+                   <div class="rg_img">
+                   <img id="vcodeimg" class="authcode" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" onclick="checkcode();"/>
+                   </div>
+	            </div>
+	            
+	          </dd>
+		     {yun:}/if{/yun}
+			  <dd><span class="photochk" style="width:100%">
+	            <input id="xieyi3" type="checkbox" name="xieyi3" value="1" class="inputChk" checked="checked">
+	            <em style="width:100%">我已阅读并同意《<a href="{yun:}url m=wap c=services{/yun}">{yun:}$config.sy_webname{/yun}人才网注册协议</a>》</em></span></dd>
+	          <dd>
+	            <input type="submit" name="submit" value="提交" class="inputSubmit">
+	          </dd>
+              
+	       </dl> 
+	       </form>
+  
+	     {yun:}/if{/yun}
+      {yun:}/if{/yun}
+    </div>
+  </article>
+</section>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

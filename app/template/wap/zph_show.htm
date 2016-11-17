@@ -1,0 +1,84 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<script>
+function zxyd(){
+layermsg("手机端暂不支持展位预定");
+}
+</script>
+<section>
+  <div class="user_contnet mt10">
+    <div class="user_contnet_box ">
+      <div class="com_show_t1">
+        <h2 style="width:100%">
+         {yun:}if $Info.stime<'0'&&$Info.etime>'0'{/yun}
+        <span class="job_fair_state_ydz">预定中：</span>
+        {yun:}elseif $Info.stime>'0'{/yun}
+        <span class="job_fair_state_wks">未开始：</span>
+         {yun:}/if{/yun}
+        {yun:}$Info.title{/yun}</h2></div>
+      <div class="job_fair_state_show_time">{yun:}$Info.starttime{/yun}至{yun:}$Info.endtime{/yun}</div>
+       
+<div class="job_fair_state_show_bth_yd_tip">手机端暂不支持在线预定哦;请电脑网页版进行预定,给你带来不便；敬请谅解</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">基本信息</span></div>
+      <ul class="user_contnet_ul user_contnet_ul_jz">
+ <li><span class="user_contnet_info_n">主 办 方：</span>{yun:}$Info.organizers{/yun}</li>
+ <li><span class="user_contnet_info_n">举办会场：</span>{yun:}$Info.address{/yun}</li>
+ <li><span class="user_contnet_info_n">咨询电话：</span>{yun:}$Info.phone{/yun}</li>
+ <li><span class="user_contnet_info_n">联 系 人：</span>{yun:}$Info.user{/yun}</li>
+ <li><span class="user_contnet_info_n">交通路线：</span>{yun:}$Info.traffic{/yun}</li>
+
+      </ul>
+    </div>
+  </div>
+</section>
+
+{yun:}if $Info.body{/yun}
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">招聘会介绍</span></div>
+    {yun:}$Info.body{/yun} 
+    </div>
+  </div>
+</section>
+ {yun:}/if{/yun}
+
+{yun:}if $Info.media{/yun}
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">媒体宣传</span></div>
+{yun:}$Info.media{/yun}    </div>
+  </div>
+</section>
+{yun:}/if{/yun}
+    {yun:}if $Info.packages{/yun}
+
+
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">超值服务套餐</span></div>
+{yun:}$Info.packages{/yun}</div>
+  </div>
+</section>
+{yun:}/if{/yun}
+
+    {yun:}if $Info.participate{/yun}
+
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">参与办法</span></div>
+{yun:}$Info.participate{/yun}</div>
+  </div>
+</section>
+ {yun:}/if{/yun}
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

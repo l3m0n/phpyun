@@ -1,0 +1,342 @@
+{yun:}include file="$comstyle/header.htm"{/yun} 
+<script charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script> 
+<script charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script> 
+<script type="text/javascript" src="{yun:}$style{/yun}/js/index.js"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/lssave.js" type="text/javascript"></script> 
+<link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/js/datepicker/css/font-awesome.min.css" type="text/css">  
+<script src="{yun:}$config.sy_weburl{/yun}/js/datepicker/foundation-datepicker.min.js"></script>
+<script language="javascript">
+var userstyle='{yun:}$user_style{/yun}';
+var editor;
+KindEditor.ready(function(K){
+	editor = K.create('#content',{
+		resizeType : 1,
+		allowPreviewEmoticons : false,
+		allowImageUpload : false,
+		items : ['source',
+		'bold', 'italic', 'underline',
+		'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+		'insertunorderedlist','emoticons'] 
+	});
+}); 
+	var id= $("#id").val();
+	var content= $("#content").val();
+	var start = 30;
+	var step = -1;
+	if(!id && !content){
+		function count(){
+		$("#atime").click(function(){ start=30});
+		document.getElementById("totalSecond").innerHTML = start;
+		start += step;
+		if(start < 0 ){
+			savecomform();
+			start = 30;
+		}
+	setTimeout("count()",1000);
+	}
+	window.onload = count;	
+	}
+$(document).ready(function() {
+
+	$(".com_admin_ask").hover(function(){  
+		layer.tips("填写详细信息，求职者更青睐，招工更快捷！", this, {
+			guide: 1,
+			style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+		});
+		$(".xubox_layer").addClass("xubox_tips_border");
+	},function(){layer.closeTips();});  
+}); 
+function checkpost(){    
+	{yun:}if $row.email_status==1{/yun}
+	ifemail = true; 
+	{yun:}else{/yun}
+	ifemail = check_email(document.myform.linkmail.value); 
+	{yun:}/if{/yun}
+	{yun:}if $row.moblie_status==1{/yun}
+	ifmoblie = true;
+	{yun:}else{/yun}
+	ifmoblie = isjsMobile(document.myform.linktel.value);
+	{yun:}/if{/yun}
+	
+	if(document.myform.phonetwo.value){
+		if(document.myform.phoneone.value==''){
+			layer.msg('请填写区号！', 2, 8);return false;
+		}else if(document.myform.phoneone.value.length>4){
+			layer.msg('请正确填写区号！', 2, 8);return false;
+		}else if(document.myform.phonethree.value){
+			var linkphone = document.myform.phoneone.value+'-'+document.myform.phonetwo.value+'-'+document.myform.phonethree.value;
+		}else{
+			var linkphone = document.myform.phoneone.value+'-'+document.myform.phonetwo.value;
+		}
+	}
+	
+	var html = editor.text();
+	var mun = $('#munid').val();
+	var ifcheck=check_form(html=="",'by_content')&check_form(ifemail==false,'by_linkmail')&check_form(myform.linkman.value=="",'by_linkman')&check_form(myform.address.value=="",'by_address')&check_form(mun=="",'by_mun')&check_form(myform.citysid.value=="",'by_cityid')&check_form(myform.pr.value=="",'by_pr')&check_form(myform.hy.value=="",'by_hy')&check_form(myform.name.value=="",'by_name')
+
+	if(ifcheck==0){return false;} 
+	if(!document.myform.linktel.value && !linkphone){
+		layer.msg('联系手机和固定电话必填一项！', 2, 8);return false; 
+	}else if(ifmoblie==false && document.myform.linktel.value!=''){ 
+		layer.msg('联系手机格式不正确！', 2, 8);return false;
+	}
+	var website=$.trim($("#website").val());
+	if(website!=''){
+		if(check_url(website)==false){
+			layer.msg('企业网址格式不正确！', 2, 8);return false;
+		}
+	}
+	var qq=$.trim($("#linkqq").val());
+	if(qq!=''&&isQQ(qq)==false){
+		layer.msg('QQ格式不正确！', 2, 8);return false; 
+	}
+	layer.load('执行中，请稍候...',0);
+} 	
+	
+</script> 
+<div class="w1000">
+  <div class="admin_mainbody"> 
+  {yun:}include file="$comstyle/left.htm"{/yun} 
+    <div class=right_box>
+      <div class=admincont_box>
+        <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+        <form name="myform" method="post" target="supportiframe"action="index.php?c=info&act=save" onsubmit="return checkpost();">
+          <div class="com_tit"><span class="com_tit_span">企业基本信息</span><span class="com_tit_right"><span class="ff0">*</span>为必填项</span></div>
+          {yun:}if $save{/yun}
+          <div id="forms"class="text_tips">您有上次未提交成功的数据 <!--<a href="index.php?c=info&act=saveform" class="text_tips_a">--><a href="javascript:;" onclick="savecom();" class="text_tips_a">恢复数据</a> <i id="close"class="text_tips_close"></i></div>
+          {yun:}/if{/yun}
+          <div class="admin_textbox_02">
+           <div class="info_logo"><img src=".{yun:}$row.logo{/yun}" width="185" height="75" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}','2')"/>
+           <div class="info_logo_p"><a href="index.php?c=uppic" class="">上传企业LOGO</a></div></div>
+            <ul>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 企业全称：</div>
+                <div class=textbox> {yun:}if $row.yyzz_status==1{/yun}
+                  <label style="font-size:13px;font-family: microsoft yahei,宋体;">{yun:}$row.name{/yun}</label>
+                  &nbsp;<font color="red">公司名已认证</font>
+                  <input type="hidden"  name="name" value="{yun:}$row.name{/yun}">
+                  {yun:}else{/yun}
+                  <input type="text" size="45"id="name" name="name" value="{yun:}$row.name{/yun}" class="com_info_text" style="width:280px;">  <a href="javascript:void(0)"  onclick="layer.msg('上传营业执照界面企业名称与系统登记名称进行批配！',2,9,function(data){window.location.href='index.php?c=binding'});return false;"class="com_index_right_Funds_sj" style="padding:1px 18px;">企业认证</a> 
+                  {yun:}/if{/yun} <span id="by_name" class="errordisplay">企业名称不能为空</span></div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 从事行业：</div>
+                <div class=textbox>
+                  <div class="text_seclet text_seclet_cur" style="z-index:400">
+                    <input id="qyhy" class="SpFormLBut text_seclet_w250 " type="button" onclick="search_show('job_qyhy');" {yun:}if $industry_name[$row.hy]==''{/yun} value="请选择从事行业"  {yun:}else{/yun} value="{yun:}$industry_name[$row.hy]{/yun}" {yun:}/if{/yun} >
+                    <input id="qyhyid" type="hidden" name="hy" {yun:}if $row.hy{/yun} value="{yun:}$row.hy{/yun}" {yun:}/if{/yun}  >
+                    <div id="job_qyhy" class="cus-sel-opt-panel" style="display:none; z-index:301">
+                      <div style="width:100%;  overflow:auto; overflow-x:hidden">
+                        <ul>
+                          {yun:}foreach item=v from=$industry_index key=k{/yun}
+                          <li> <a onclick="selects('{yun:}$v{/yun}','qyhy','{yun:}$industry_name[$v]{/yun}');" href="javascript:;"> {yun:}$industry_name[$v]{/yun}</a> </li>
+                          {yun:}/foreach{/yun}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <span id="by_hy" class="errordisplay">请选择从事行业</span> </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 企业性质：</div>
+                <div class=textbox>
+                  <div class="text_seclet text_seclet_cur2 re">
+                    <input id="qypr" class="SpFormLBut text_seclet_w158" type="button" onclick="search_show('job_qypr');" {yun:}if $comclass_name[$row.pr]==''{/yun} value="请选择企业性质" {yun:}else{/yun} value="{yun:}$comclass_name[$row.pr]{/yun}" {yun:}/if{/yun}  >
+                    <input id="qyprid" type="hidden" name="pr" {yun:}if $row.pr{/yun} value="{yun:}$row.pr{/yun}" {yun:}/if{/yun} >
+                    <div id="job_qypr" class="cus-sel-opt-panel cus-sel-opt-panel-w156 cus_h70" style="display: none;">
+                      <ul class="Search_Condition_box_list">
+                        {yun:}foreach from=$comdata.job_pr key=j item=v{/yun}
+                        <li> <a onclick="selects('{yun:}$v{/yun}','qypr','{yun:}$comclass_name[$v]{/yun}');" href="javascript:;">{yun:}$comclass_name[$v]{/yun}</a> </li>
+                        {yun:}/foreach{/yun}
+                      </ul>
+                    </div>
+                  </div>
+                  <span id="by_pr" class="errordisplay">企业性质不能为空！</span> </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 企业规模：</div>
+                <div class=textbox>
+                  <div class="text_seclet text_seclet_cur3">
+                    <input id="mun" class="SpFormLBut text_seclet_w158" type="button" onclick="search_show('job_mun');" {yun:}if $comclass_name[$row.mun]==''{/yun} value="请选择企业规模" {yun:}else{/yun} value="{yun:}$comclass_name[$row.mun]{/yun}" {yun:}/if{/yun} >
+                    <input id="munid" name="mun" type="hidden" {yun:}if $row.mun{/yun} value="{yun:}$row.mun{/yun}" {yun:}/if{/yun} >
+                    <div id="job_mun" class="cus-sel-opt-panel cus-sel-opt-panel-w156" style="display:none">
+                      <ul class="Search_Condition_box_list">
+                        {yun:}foreach from=$comdata.job_mun key=j item=v{/yun}
+                        <li><a onclick="selects('{yun:}$v{/yun}','mun','{yun:}$comclass_name[$v]{/yun}');" href="javascript:;"> {yun:}$comclass_name[$v]{/yun}</a></li>
+                        {yun:}/foreach{/yun}
+                      </ul>
+                    </div>
+                  </div>
+                  <span id="by_mun" class="errordisplay">请选择企业规模</span> </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 所在地：</div>
+                <div class=textbox>
+                  <div class="text_seclet text_seclet_cur4 fltL">
+                    <input class="SpFormLBut text_seclet_w158" type="button" {yun:}if $city_name[$row.provinceid]{/yun} value="{yun:}$city_name[$row.provinceid]{/yun}" {yun:}else{/yun}value="请选择省份"{yun:}/if{/yun} id="province" onclick="search_show('job_province');">
+                    <input type="hidden" id="provinceid" name="provinceid" value="{yun:}$row.provinceid{/yun}" />
+                    <div id="job_province" class="cus-sel-opt-panel cus-sel-opt-panel-w156" style="display:none">
+                      <div style="width:100%;  overflow:auto; overflow-x:hidden">
+                        <ul class="Search_Condition_box_list">
+                          {yun:}foreach from=$city_index key=j item=v{/yun}
+                          <li><a href="javascript:;" onclick="select_city('{yun:}$v{/yun}','province','{yun:}$city_name[$v]{/yun}','citys','city');"> {yun:}$city_name[$v]{/yun}</a></li>
+                          {yun:}/foreach{/yun}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text_seclet text_seclet_cur3 fltL">
+                    <input class="SpFormLBut text_seclet_w158" type="button" {yun:}if $city_name[$row.cityid]{/yun} value="{yun:}$city_name[$row.cityid]{/yun}" {yun:}else{/yun}value="请选择城市"{yun:}/if{/yun} id="citys" onclick="search_show('job_citys');">
+                    <input type="hidden" id="citysid" name="cityid" value="{yun:}$row.cityid{/yun}" />
+                    <div id="job_citys" class="cus-sel-opt-panel cus-sel-opt-panel-w156" style="display:none">
+                      <div style="width:100%;  overflow:auto; overflow-x:hidden">
+                        <ul class="Search_Condition_box_list">
+                          {yun:}foreach from=$city_type[$row.provinceid] key=j item=v{/yun}
+                          <li><a href="javascript:;" onclick="select_city('{yun:}$v{/yun}','citys','{yun:}$city_name[$v]{/yun}','three_city','city');"> {yun:}$city_name[$v]{/yun}</a></li>
+                          {yun:}/foreach{/yun}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text_seclet text_seclet_cur3 fltL" id="cityshowth">
+                    <input class="SpFormLBut text_seclet_w158" type="button" {yun:}if $city_name[$row.three_cityid]{/yun} value="{yun:}$city_name[$row.three_cityid]{/yun}" {yun:}else{/yun}value="请选择区县"{yun:}/if{/yun} id="three_city" onclick="three_city_show('job_three_city');">
+                    <input type="hidden" id="three_cityid" name="three_cityid" value="{yun:}$row.three_cityid{/yun}" />
+                    <div id="job_three_city" class="cus-sel-opt-panel cus-sel-opt-panel-w156" style="display:none">
+                      <ul class="Search_Condition_box_list">
+                        {yun:}foreach from=$city_type[$row.cityid] key=j item=v{/yun}
+                        <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}','three_city','{yun:}$city_name[$v]{/yun}');"> {yun:}$city_name[$v]{/yun}</a></li>
+                        {yun:}/foreach{/yun}
+                      </ul>
+                    </div>
+                  </div>
+                  <span id="by_cityid" class="errordisplay">请选择所在地</span> </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 公司地址：</div>
+                <div class=textbox>
+                  <input type="text" style="width:320px;" id="address"name="address" size="45" value="{yun:}$row.address{/yun}" class="com_info_text"/>
+                  <span id="by_address" class="errordisplay">请填写正确的公司地址</span> </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 联  系  人：</div>
+                <div class=textbox>
+                  <input type="text" id="linkman"name="linkman" size="15" value="{yun:}$row.linkman{/yun}" class="com_info_text"/>
+                  <span id="by_linkman" class="errordisplay">请设置招聘联系人</span> </div>
+              </li>
+              <li>
+                <div class=tit> 联系手机：</div>
+                <div class=textbox> 
+				{yun:}if $row.moblie_status==1{/yun}
+                  {yun:}$row.linktel{/yun} <a href="index.php?c=binding" style="color:red;">重新认证</a>
+                  <input type="text" id="linktel" name="linktel" value="{yun:}$row.linktel{/yun}" style="display:none;">
+                  {yun:}else{/yun}
+                  <input type="text" id="linktel" name="linktel" size="25" value="{yun:}$row.linktel{/yun}" onkeyup="this.value=this.value.replace(/[^0-9-]/g,'')"class="com_info_text"/>
+                  <span id="moblie_verify" style="display:none;">修改后手机需<a href="index.php?c=binding" style="color:red;">重新认证</a></span> <span id="by_linktel" class="errordisplay">手机格式不正确</span>
+				  {yun:}/if{/yun} 
+				 </div>
+              </li>
+              <li>
+                <div class=tit>固定电话：</div>
+                <div class=textbox>
+                  <input type="text" id="phoneone" name="phoneone" style="width:60px" value="{yun:}$row.phoneone{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="com_info_text" placeholder="区号" maxlength="4"/>
+				  <span class="fltL com_info_text_r">-</span>
+                  <input type="text" id="phonetwo" placeholder="座机号" name="phonetwo"  value="{yun:}$row.phonetwo{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength="8" class="com_info_text com_info_text_120"/>
+				  <span class="fltL com_info_text_r">-</span>
+                  <input type="text" id="phonethree" placeholder="分机号" name="phonethree"  value="{yun:}$row.phonethree{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="com_info_text com_info_text_60"/>
+                  <span><font color="#FF0000">*</font> 手机或电话必填一项</span> </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 招聘邮箱：</div>
+                <div class=textbox> {yun:}if $row.email_status==1{/yun}
+                  {yun:}$row.linkmail{/yun}<a href="index.php?c=binding" style="color:red;">重新认证</a>
+                  <input type="text" id="linkmail" value="{yun:}$row.linkmail{/yun}" style="display:none;">
+                  {yun:}else{/yun}
+                  <input type="text" id="linkmail"name="linkmail" size="35" value="{yun:}$row.linkmail{/yun}" class="com_info_text" style="width:250px">
+                  <span style="display:none;" id="email_verify">修改后邮件需 <a href="index.php?c=binding" style="color:red;">重新认证</a></span> <span id="by_linkmail" class="errordisplay">招聘邮箱格式不正确</span> {yun:}/if{/yun} </div>
+              </li>
+              <li>
+                <div class=tit><font color="#FF0000">*</font> 企业简介：</div>
+                <div class=textbox>
+                  <textarea name="content" id="content" style="width:100%" rows="10">{yun:}$row.content{/yun}</textarea>
+                  <span id="by_content" class="errordisplay">请填写相关企业简介</span> </div>
+              </li>
+              <div class="admin_tit" id='for_logo'><span class="admin_tit_bg">补充信息</span><i class="com_admin_ask"></i><span class=remind style="float:right; margin-right:20px;">以下为选填项</span></div>
+              <li>
+                <div class=tit>创办时间：</div>
+                <div class=textbox>
+					<input type="text" id="sdate" name="sdate" value="{yun:}$row.sdate{/yun}" class="com_info_text" /> 
+					<script>
+					$('#sdate').fdatepicker({format: 'yyyy-mm-dd',startView:4,minView:2});  
+					</script>
+				</div>
+              </li>
+              <li>
+                <div class=tit>注册资金：</div>
+                <div class=textbox>
+                  <input type="text" id="money" name="money" size="10" value="{yun:}$row.money{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"class="com_info_text" />
+                  万元 </div>
+              </li>
+              <li>
+                <div class=tit>邮政编码：</div>
+                <div class=textbox>
+                  <input type="text" name="zip" size="10" value="{yun:}$row.zip{/yun}" id='zip' onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="com_info_text"/>
+                </div>
+              </li>
+              <li>
+                <div class=tit>联系人职位：</div>
+                <div class=textbox>
+                  <input type="text" id="linkjob"name="linkjob" size="15" value="{yun:}$row.linkjob{/yun}" class="com_info_text"/>
+                </div>
+              </li>
+              <li>
+                <div class=tit>联 系 QQ：</div>
+                <div class=textbox>
+                  <input type="text" id="linkqq" name="linkqq" size="15" value="{yun:}$row.linkqq{/yun}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" maxlength='12' class="com_info_text"/>
+                </div>
+              </li>
+              <li>
+                <div class="tit">企业网址：</div>
+                <div class="textbox">
+                  <input type="text" id="website" name="website" size="35" value="{yun:}$row.website{/yun}" class="com_info_text"/>
+                  如：{yun:}$config.sy_weburl{/yun} </div>
+              </li>
+              <li>
+                <div class="tit">公交站点：</div>
+                <div class="textbox">
+                  <textarea name="busstops" id="busstops" class="com_info_textarea" rows="3">{yun:}$row.busstops{/yun}</textarea>
+                </div>
+              </li>
+              <li>
+                <div class="admin_submit">
+                  <div class="condition">&nbsp;</div>
+                  <div class="sub_btn">
+                    <input class="btn_01" style="_margin-left:-3px" type="submit" name="submitbtn" value="更新信息">
+                  </div>
+                  <input id="save"name="save" value="{yun:}$row.linkman{/yun}" type="hidden"/>
+                </div>
+              </li>
+            </ul>
+            <div class="clear"></div>
+          </div>
+          {yun:}if !$row.linkman && !$row.content{/yun}
+          <div class="text_tips_bc">
+            <div class="text_tips_bc_h1"> 信息保存</div>
+            <div class="text_tips_bc_cont"> {yun:}if $save.time{/yun}
+              <div class="text_tips_bc_l">信息已于{yun:}$save.time{/yun}保存</div>
+              {yun:}/if{/yun}
+              <div class="text_tips_bc_r">
+                <div class="text_tips_bc_time"> <span id="totalSecond"></span>s后将自动保存<br>
+                  已填信息</div>
+                <a  id="atime"href="javascript:;" onclick="savecomform();" class="text_tips_bc_bth">临时保存信息</a> </div>
+            </div>
+          </div>
+          {yun:}/if{/yun}
+		  <div class="clear"></div>
+        </form>
+		<div class="clear"></div>
+      </div>
+    </div>
+  </div>
+</div>  
+<div class="clear"></div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

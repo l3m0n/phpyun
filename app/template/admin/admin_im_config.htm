@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<link href="images/reset.css" rel="stylesheet" type="text/css" />
+<link href="images/system.css" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layer/layer.min.js" language="javascript"></script>
+<script src="js/admin_public.js" language="javascript"></script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="infoboxp_top_bg"></div>
+<div id="subboxdiv" style="width:100%;height:100%;display:none;position:absolute;"></div>
+<div class="infoboxp_top">
+<h6>聊天设置</h6>
+</div>
+<div class="main_tag">
+<div class="tag_box">
+<div>
+ <table width="100%" class="table_form">
+         <tr class="admin_table_trbg">
+            <th width="160" style="width:160px;">参数说明： </th>
+            <td>参数值</td>
+        </tr>
+       <tr>
+            <th width="160">开启聊天：</th>
+            <td>
+              <input type="radio" name="sy_im_online" value="1" id="sy_im_online_0" {yun:}if $config.sy_im_online=="1"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_msg_online_0">开启</label>
+              <input type="radio" name="sy_im_online" value="0" id="sy_im_online_1" {yun:}if $config.sy_im_online=="0"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_msg_online_1">关闭</label>&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <th width="160">管理员帐户：</th>
+            <td><input class="input-text tips_class" type="text" name="sy_im_user" id="sy_im_user" value="{yun:}$config.sy_im_user{/yun}" size="50" maxlength="255" /><span class="admin_web_tip">如：shyflc，多个请用,隔开</span></td>
+        </tr>
+        <tr>
+            <th width="160">跨用户类型聊天：</th>
+            <td><input type="radio" name="sy_im_type" value="1" id="sy_im_type_0" {yun:}if $config.sy_im_type=="1"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_type_0">开启</label>
+              <input type="radio" name="sy_im_type" value="0" id="sy_im_type_1" {yun:}if $config.sy_im_type=="0"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_type_1">关闭</label>&nbsp;&nbsp;</td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <th width="160">用户类型：</th>
+            <td><input type="checkbox" name="sy_im_usertype" value="1" id="sy_im_usertype_0" {yun:}if strstr($config.sy_im_usertype,'1'){/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_usertype_0">个人</label>
+              <input type="checkbox" name="sy_im_usertype" value="2" id="sy_im_usertype_1" {yun:}if strstr($config.sy_im_usertype,'2'){/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_usertype_1">企业</label>&nbsp;&nbsp;
+
+              <input type="checkbox" name="sy_im_usertype" value="4" id="sy_im_usertype_3" {yun:}if strstr($config.sy_im_usertype,'4'){/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_usertype_3">未审核好友</label>&nbsp;&nbsp;
+              <input type="checkbox" name="sy_im_usertype" value="5" id="sy_im_usertype_4" {yun:}if strstr($config.sy_im_usertype,'5'){/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_usertype_4">管理员</label>&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <th width="160">个人设置：</th>
+            <td><input type="radio" name="sy_im_resume" value="1" id="sy_im_resume_0" {yun:}if $config.sy_im_resume=="1"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_resume_0">显示简历</label>
+              <input type="radio" name="sy_im_resume" value="0" id="sy_im_resume_1" {yun:}if $config.sy_im_resume=="0"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_resume_1">不显示简历</label>&nbsp;&nbsp;</td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <th width="160">企业设置：</th>
+            <td style="line-height:25px;">
+            <input type="radio" name="sy_im_comname" value="1" id="sy_im_comname_0" {yun:}if $config.sy_im_comname=="1"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_comname_0">显示公司名称</label>
+              <input type="radio" name="sy_im_comname" value="0" id="sy_im_comname_1" {yun:}if $config.sy_im_comname=="0"{/yun}checked{yun:}/if{/yun}>
+              <label for="sy_im_comname_1">不显示公司名称</label>&nbsp;&nbsp;<br/>
+            
+            显示职位数 : <input class="input-text tips_class" type="text" name="sy_im_comjob" id="sy_im_comjob" value="{yun:}$config.sy_im_comjob{/yun}" size="10" maxlength="255" /><span class="admin_web_tip">0为不显示</span></td>
+        </tr>
+       <tr class="admin_table_trbg">
+            <th width="160">聊天过滤关键词：</th>
+            <td><textarea name="sy_im_keyword" id="sy_im_keyword" rows="3" cols="50" class="text input-text tips_class">{yun:}$config.sy_im_keyword{/yun}</textarea>
+            <span class="admin_web_tip">如：手机号码,电话</span></td>
+        </tr>
+        <tr>
+            <th width="160">替换过滤关键词：</th>
+            <td><textarea name="sy_im_fkeyword" id="sy_im_fkeyword" rows="3" cols="50" class="text input-text tips_class">{yun:}$config.sy_im_fkeyword{/yun}</textarea>
+            <span class="admin_web_tip">将敏感关键词替换</span></td>
+        </tr>
+        <tr class="admin_table_trbg">
+            <td colspan="2" align="center"><input class="admin_submit4" id="config" type="button" name="msgconfig" value="提交" />&nbsp;&nbsp;<input class="admin_submit4" type="reset" value="重置" /></td>
+        </tr>
+		<input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+    </table> 
+
+</div>
+</div>
+</div>
+<script>
+$(function(){ 
+	$(".tips_class").hover(function(){ 
+		var msg_id=$(this).attr('id'); 
+		var msg=$('#'+msg_id+' + font').html();
+		if($.trim(msg)!=''){
+			layer.tips(msg, this, {
+			guide: 1, 
+			style: ['background-color:#5EA7DC; color:#fff;top:-7px', '#5EA7DC']
+			}); 
+			$(".xubox_layer").addClass("xubox_tips_border");
+		} 
+	},function(){
+		var msg_id=$(this).attr('id');
+		var msg=$('#'+msg_id+' + font').html();
+		if($.trim(msg)!=''){
+			layer.closeTips();
+		} 
+	});
+	$("#config").click(function(){
+		var codewebarr="";
+		$("input[name=sy_im_usertype]:checked").each(function(){ //由于复选框一般选中的是多个,所以可以循环输出 
+			if(codewebarr==""){codewebarr=$(this).val();}else{codewebarr=codewebarr+","+$(this).val();}
+		});
+		$.post("index.php?m=msgconfig&c=save",{
+			config : $("#config").val(),
+			sy_im_online : $("input[name=sy_im_online]:checked").val(),
+			sy_im_user : $("#sy_im_user").val(),
+			sy_im_type : $("input[name=sy_im_type]:checked").val(),
+			sy_im_usertype : codewebarr,
+			sy_im_resume : $("input[name=sy_im_resume]:checked").val(),
+			sy_im_comname : $("input[name=sy_im_comname]:checked").val(),
+			sy_im_comjob :$("#sy_im_comjob").val(),
+			sy_im_keyword :$("#sy_im_keyword").val(),
+			sy_im_fkeyword :$("#sy_im_fkeyword").val(),
+			pytoken : $("#pytoken").val()
+		},function(data,textStatus){ 
+			config_msg(data); 
+		});
+	});
+	
+})
+</script>
+</div>
+</body>
+</html>

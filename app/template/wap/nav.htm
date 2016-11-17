@@ -1,0 +1,22 @@
+<div class="friend">
+     <div class="friend_head">
+          <div class="friend_head_fc">
+          <img src="{yun:}$info.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_friend_icon{/yun}',2);"/>         
+          </div>
+          <div class="friend_head_nm">{yun:}$info.nickname{/yun}</div>
+          <div class="friend_head_see">粉丝 {yun:}$info.fans{/yun} &nbsp;|&nbsp; 关注 {yun:}$info.atnnum{/yun}</div>
+          <div class="friend_head_gx">个性签名：{yun:}$info.description|mb_substr:0:14:'gbk'{/yun}</div>
+
+     </div>
+</div>
+<div class="askfriend_nav">
+  <ul>
+    <li {yun:}if $smarty.get.a==''||$smarty.get.a=='friend'{/yun}class="askfriend_cur"{yun:}/if{/yun}><a href="{yun:}url m=wap c=ask a=friend uid=$info.uid{/yun}">新鲜事</a></li>
+    <li {yun:}if $smarty.get.a=='myquestion'{/yun}class="askfriend_cur"{yun:}/if{/yun}><a href="{yun:}url m=wap c=ask a=myquestion uid=$info.uid{/yun}">提问</a></li>
+    <li {yun:}if $smarty.get.a=='myanswer'{/yun}class="askfriend_cur"{yun:}/if{/yun}><a href="{yun:}url m=wap c=ask a=myanswer  uid=$info.uid{/yun}">回答</a></li>
+    <li {yun:}if $smarty.get.a=='attenquestion'{/yun}class="askfriend_cur"{yun:}/if{/yun}><a href="{yun:}url m=wap c=ask a=attenquestion  uid=$info.uid{/yun}">关注的问题</a></li>
+    <li {yun:}if $smarty.get.a=='myatn'{/yun}class="askfriend_cur"{yun:}/if{/yun}><a href="{yun:}url m=wap c=ask a=myatn  uid=$info.uid{/yun}">关注达人</a></li>
+    <li {yun:}if $smarty.get.a=='myfans'{/yun}class="askfriend_cur"{yun:}/if{/yun}><a href="{yun:}url m=wap c=ask a=myfans  uid=$info.uid{/yun}">粉丝</a></li>
+  </ul>
+</div>
+

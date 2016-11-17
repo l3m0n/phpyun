@@ -1,0 +1,19 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+{yun:}include file="$wapstyle/nav.htm"{/yun} 
+{yun:}foreach from=$rows item=alist{/yun}
+<div class="askfriend_ct">
+  <div class="answer_dp">
+    <div class="answer_dp_hd"><a href="{yun:}url m=wap c=ask a=content id='`$alist.qid`'{/yun}">{yun:}$alist.title{/yun}</a></div>
+  </div>
+  <div class="answer_qus">
+    <div class="answer_qus_ct">
+        <div>{yun:}$alist.content{/yun}</div> 
+        <div style="font-size:12px;"><font color="#999">{yun:}$alist.add_time|date_format:"%Y-%m-%d"{/yun}</font></div>
+    </div>
+  </div>
+</div>
+{yun:}foreachelse{/yun}
+<div class="noresult png">ÔÝÎÞ»Ø´ð£¡</div>
+{yun:}/foreach{/yun}
+<div class="pages">{yun:}$pagenav{/yun}</div> 
+{yun:}include file="$wapstyle/footer.htm"{/yun}

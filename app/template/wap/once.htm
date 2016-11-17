@@ -1,0 +1,28 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<section>
+  <div class="warp_content clear"> {yun:}fast item=once ispage=1 limit=20 keyword='auto.keyword' islt=4 {/yun}
+    <div class="list_once_box"> <a href="{yun:}url m=wap c=once a=show id=$once.id{/yun}">
+      <div class="list_once_name">{yun:}$once.title{/yun}</div>
+      <div class="list_once_name_P">{yun:}$once.require|mb_substr:0:100:gbk{/yun}</div>
+      <div class="list_once_name_P_tel">
+      <div class="list_once_name_P"> 联系电话：{yun:}if $config.user_wzp_link=='1' && !$smarty.cookies.uid{/yun} <a href='{yun:}url m=wap c=login usertype=2{/yun}'><font color='red'>登录后查看联系电话</font></a> {yun:}else{/yun}{yun:}$once.phone{/yun}{yun:}/if{/yun}</div>
+      <div class="list_once_name_P"> 联&nbsp; 系&nbsp; 人：{yun:}$once.linkman{/yun} </div>
+      </div>
+      </a> </div>
+    {yun:}/fast{/yun} 
+    {yun:}if $total<=0{/yun}
+    {yun:}if $smarty.get.keyword!="" {/yun}
+    <div class="wap_member_no">没有搜索到店铺招聘</div>
+    {yun:}else{/yun}
+    <div class="wap_member_no">暂无店铺招聘</div>
+    {yun:}/if{/yun}
+    {yun:}else{/yun}
+    <div class="pages">{yun:}$pagenav{/yun}</div>
+    {yun:}/if{/yun} </div>
+</section>
+<div style="height:70px;"></div>
+
+<div id="yun_cz" class="fn-dbox center">
+  <div id="resumeBtn" class="deep fn-dbox-flex fn-dbox-flex-flex1"> {yun:}if $num>0{/yun} <a href="{yun:}url m=wap c=once a=add{/yun}" class="once_t_fb"> <i class="fa fa-pencil-square-o"></i> 我要发布招聘信息</a> {yun:}else{/yun} <a href="javascript:void(0);" onclick="layermsg('一天内只能发布{yun:}$config.sy_once{/yun}次！')" class="once_t_fb"> <i class="fa fa-pencil-square-o"></i> 我要发布招聘信息</a> {yun:}/if{/yun} </div>
+</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

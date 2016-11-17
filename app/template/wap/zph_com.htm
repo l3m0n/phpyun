@@ -1,0 +1,47 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<section>
+  <div class="user_contnet mt10">
+    <div class="user_contnet_box ">
+      <div class="com_show_t1">
+        <h2 style="width:100%">
+         {yun:}if $row.stime<'0'&&$row.etime>'0'{/yun}
+        <span class="job_fair_state_ydz">预定中：</span>
+        {yun:}elseif $row.stime>'0'{/yun}
+        <span class="job_fair_state_wks">未开始：</span>
+         {yun:}/if{/yun}
+        {yun:}$row.title{/yun}</h2></div>
+        
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="user_contnet" style="padding-bottom:60px;">
+    <div class="index_warp_content">
+      <div class="wap_title"><span class="">参会企业</span></div>
+      {yun:}foreach item=zph from=$rows key=key{/yun}
+      <div class="job_fair_compay_list">
+      <div class="job_fair_ch_name"><a href="{yun:}url m=wap c=company a=show id='`$zph.uid`'{/yun}">{yun:}$zph.comname{/yun} </a></div>
+      <div class="job_fair_Booth_number">展&nbsp; 位&nbsp;号：{yun:}$zph.cidname{/yun}{yun:}$zph.bidname{/yun} </div>
+      <div class="job_fair_zp_job">参会职位：</div>
+      <div class="job_fair_zp_job">
+      {yun:}if $zph.job{/yun}
+      {yun:}foreach from=$zph.job item=jlist{/yun}
+       <a href="{yun:}url m=wap c=job a=view id=$jlist.id{/yun}" target="_blank">{yun:}$jlist.name{/yun}</a>
+       &nbsp;&nbsp;
+      {yun:}/foreach{/yun}
+      {yun:}/if{/yun}</div>
+      <div class="job_fair_rem"><a href="{yun:}url m=wap c=job a=view id='`$zph.jobid`'{/yun}" class="job_fair_rem_bth">提前投递简历</a></div>
+      </div>
+      {yun:}foreachelse{/yun}
+        <div class="job_fair_compay_list">暂无公司报名！</div>
+        {yun:}/foreach{/yun} 
+<div class="clear"></div>
+        <div class="pages"> {yun:}$pagenav{/yun} </div>        
+       </div>
+  </div>
+</section>
+
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

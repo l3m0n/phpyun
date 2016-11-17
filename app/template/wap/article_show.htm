@@ -1,0 +1,37 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+
+<div class="news_list_box">
+<div class="wap_tit">
+  <h1>{yun:}$row.title{/yun}</h1>
+</div>
+<div class="news_cont_ms">{yun:}$row.datetime|date_format:"%Y-%m-%d"{/yun} 来源：{yun:}$row.source{/yun} 点击：<span id="click"><script language="javascript" src="{yun:}url m=wap c=article a=GetHits id='`$row.id`'{/yun}"></script></span> 次 </div>
+<div class="wap_news_cont">
+  <div class="wap_txt link_lan"> {yun:}$row.content{/yun} </div>
+</div>
+{yun:}if $about{/yun}
+<div class="atc_news_tj">
+	<div class="atc_news_tj_h1"><span>相关推荐</span></div>
+	<div>
+		<ul>
+		{yun:}foreach from=$about item=alist{/yun}
+		<li><a href="{yun:}url m=wap c=article a=show id=$alist.id{/yun}">{yun:}$alist.title{/yun}</a></li>
+		{yun:}/foreach{/yun}
+		</ul>
+	</div>
+</div>
+{yun:}/if{/yun}
+<a href="javascript:void(0);" id="shareClick" style="display:block; background:#f60;border:1px solid #f60; padding:5px;color:#fff; text-align:center">分享</a>
+</div>
+
+<script>
+	var config = {
+		url:'{yun:}url m=wap c=article a=show id=$row.id{/yun}',
+		title:'{yun:}$row.title{/yun}',
+		desc:'{yun:}$row.description|replace:"\r\n":""{/yun}',
+		img:'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}',
+		img_title:'{yun:}$row.title{/yun}',
+		from:'{yun:}$config.sy_webname{/yun}'
+	};
+</script>
+{yun:}include file="$wapstyle/nativeshare.htm"{/yun}
+{yun:}include file="$wapstyle/footer.htm"{/yun}

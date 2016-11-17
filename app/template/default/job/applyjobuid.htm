@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layer/layer.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/lazyload.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/member_public.js" language="javascript"></script>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/css.css" type="text/css"/>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/comapply.css" type="text/css"/>
+<!--[if IE 6]>
+<script src="{yun:}$config.sy_weburl{/yun}/js/png.js"></script>
+<script>
+DD_belatedPNG.fix('.png');
+</script>
+<![endif]-->
+</head> 
+<body>
+<script>
+var integral_pricename='{yun:}$config.integral_pricename{/yun}';
+var weburl="{yun:}$config.sy_weburl{/yun}"; 
+var index = parent.layer.getFrameIndex(window.name);
+</script>
+<script src="{yun:}$style{/yun}/js/company.js" type="text/javascript"></script> 
+{yun:}include file="$tplstyle/public_search/index_search.htm"{/yun} 
+<script src="{yun:}$config.sy_weburl{/yun}/data/plus/job.cache.js" type="text/javascript"></script>
+<link rel="stylesheet" href="{yun:}$style{/yun}/style/class.public.css" type="text/css"/>
+<script src="{yun:}$config.sy_weburl{/yun}/js/class.public.js" type="text/javascript"></script>   
+<!--注册弹出框-->
+<div  id="regbaoming">
+  <div class="yun_reg_BasicInfo">
+    <div class="yun_reg_BasicInfo_h1"> <span class="yun_reg_BasicInfo_h1_span yun_text_color">30秒填写简历好工作轻松搞定！</span> <em class="yun_reg_BasicInfo_h1_em">已有账号，立即<a href="javascript:void(0);" onclick="OnLogin();" class="yun_reg_BasicInfo_h1_bth yun_bg_color">登录</a></em> </div>
+    <div class="yun_reg_BasicInfo_box">
+      <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>简历名称：</span>
+        <input type="text" name="name" id="name" class="yun_reg_BasicInfo_text">
+      </div>
+      <div class="yun_reg_BasicInfo_left">
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>真实姓名：</span>
+          <input type="text"  name="uname" id="uname" class="yun_reg_BasicInfo_text yun_reg_BasicInfo_text_w155"/>
+          {yun:}foreach from=$userdata.user_sex item=v key=key{/yun}
+          <input type="radio" name="sex" value="{yun:}$v{/yun}" class="yun_reg_BasicInfo_r" {yun:}if $key==0{/yun}checked="checked"{yun:}/if{/yun}/>
+          <span class="yun_reg_BasicInfo_xb">{yun:}$userclass_name[$v]{/yun}</span> {yun:}/foreach{/yun}</div>
+        <div class="yun_reg_BasicInfo_list"> <span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>出生年月：</span>
+          <div class="yun_reg_BasicInfo_l_r yun_reg_BasicInfo_l_date">
+            <input type="button" value="1988-08-08" name="birthday" id="birthday" class="yun_reg_BasicInfo_date_text"/>
+            <link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/js/datepicker/css/font-awesome.min.css" type="text/css">
+			<script src="{yun:}$config.sy_weburl{/yun}/js/datepicker/foundation-datepicker.min.js"></script>
+			<script type="text/javascript">
+			$('#birthday').fdatepicker({format: 'yyyy-mm-dd',startView:4,minView:2});  
+			</script> 
+		   
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>最高学历：</span>
+          <div class="yun_reg_BasicInfo_l_r z-index100">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="educ" onclick="search_show('job_educ');"/>
+            <input type="hidden" id="educid" name="edu" />
+            <i class="yun_reg_BasicInfo_list_icon"></i>
+            <div class="yun_reg_BasicInfo_l_box none" id="job_educ">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$userdata.user_edu key=j item=v{/yun}
+                <li> <a href="javascript:;" onclick="selects('{yun:}$v{/yun}','educ','{yun:}$userclass_name[$v]{/yun}');" rel="nofollow"> {yun:}$userclass_name[$v]{/yun}</a> </li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>工作经验：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index90">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="exp" onclick="search_show('job_exp');"/>
+            <input type="hidden" id="expid" name="exp" />
+            <i class="yun_reg_BasicInfo_list_icon"></i>
+            <div class="yun_reg_BasicInfo_l_box none" id="job_exp">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$userdata.user_word key=j item=v{/yun}
+                <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}','exp','{yun:}$userclass_name[$v]{/yun}');"> {yun:}$userclass_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>手机号码：</span>
+          <input type="text" name="telphone" id="telphone"onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" class="yun_reg_BasicInfo_text"/>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i"/>*</i>联系邮箱：</span>
+          <input type="text" name="email" id="email" class="yun_reg_BasicInfo_text"/>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>现居住地：</span>
+          <input type="text"  name="living" id="living" class="yun_reg_BasicInfo_text"/>
+        </div>
+      </div>
+      <div class="yun_reg_BasicInfo_right">
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>从事行业：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index100">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="hy" onclick="search_show('job_hy');"/>
+            <input type="hidden" id="hyid" name="hy" />
+              <i class="yun_reg_BasicInfo_list_icon"></i>
+            <div class="yun_reg_BasicInfo_l_box none" id="job_hy">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach item=v from=$industry_index key=k{/yun}
+                <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}','hy','{yun:}$industry_name[$v]{/yun}');" rel="nofollow"> {yun:}$industry_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>期望职位：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index90">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" onclick="index_job(5,'#workadds_job','#job_class','left:100px;top:100px; position:absolute;');" id="workadds_job"/>
+            <input name='job_class' id='job_class'  type='hidden' />
+            <i class="yun_reg_BasicInfo_list_icon"></i>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>期望薪资：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index80">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="salary" onclick="search_show('job_salary');"/>
+            <input type="hidden" id="salaryid" name="salary" />
+            <div class="yun_reg_BasicInfo_l_box none" id="job_salary">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$userdata.user_salary key=j item=v{/yun}
+                <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}','salary','{yun:}$userclass_name[$v]{/yun}');" rel="nofollow"> {yun:}$userclass_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>期望城市：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index70 news_expect_text_w100">
+             <i class="yun_reg_BasicInfo_list_icon"></i>
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_butw100" id="province" onclick="search_show('job_province');"/>
+            <input type="hidden" id="provinceid" name="provinceid" />
+               
+            <div class="yun_reg_BasicInfo_l_box yun_reg_BasicInfo_l_box_w90 none" id="job_province">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$city_index key=j item=v{/yun}
+                <li><a href="javascript:void(0);" onclick="select_city('{yun:}$v{/yun}','province','{yun:}$city_name[$v]{/yun}','citys','city');" rel="nofollow">{yun:}$city_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+          <div class="yun_reg_BasicInfo_l_r z-index70  news_expect_text_w100">
+              <i class="yun_reg_BasicInfo_list_icon"></i>
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_butw100" id="citys" onclick="search_show('job_citys');"/>
+            <input type="hidden" id="citysid" name="citysid"/>
+              
+            <div class="yun_reg_BasicInfo_l_box yun_reg_BasicInfo_l_box_w90 none" id="job_citys">
+              <ul class="yun_reg_BasicInfo_text_list"></ul>
+            </div>
+          </div>
+          <div class="yun_reg_BasicInfo_l_r  z-index70 news_expect_text_w100">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_butw100" id="three_city" onclick="search_show('job_three_city');"/>
+            <input type="hidden" id="three_cityid" name="three_cityid" />
+                  <i class="yun_reg_BasicInfo_list_icon"></i>
+            <div class="yun_reg_BasicInfo_l_box yun_reg_BasicInfo_l_box_w90 none" id="job_three_city">
+              <ul class="yun_reg_BasicInfo_text_list"> </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>工作性质：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index60">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="type" onclick="search_show('job_type');"/>
+            <input type="hidden" id="typeid" name="type"/>
+            <i class="yun_reg_BasicInfo_list_icon"></i>
+            <div class="yun_reg_BasicInfo_l_box none" id="job_type">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$userdata.user_type key=j item=v{/yun}
+                <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}', 'type', '{yun:}$userclass_name[$v]{/yun}');" rel="nofollow"> {yun:}$userclass_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>到岗时间：</span>
+          <div class="yun_reg_BasicInfo_l_r  z-index50">
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="report" onclick="search_show('job_report');"/>
+            <input type="hidden" id="reportid" name="report"/>
+            <i class="yun_reg_BasicInfo_list_icon"></i>
+            <div class="yun_reg_BasicInfo_l_box none" id="job_report">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$userdata.user_report key=j item=v{/yun}
+                <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}', 'report', '{yun:}$userclass_name[$v]{/yun}');"> {yun:}$userclass_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="yun_reg_BasicInfo_list"><span class="yun_reg_BasicInfo_s"><i class="yun_reg_BasicInfo_i">*</i>求职状态：</span>
+          <div class="yun_reg_BasicInfo_l_r z-index40 ">
+          
+             <i class="yun_reg_BasicInfo_list_icon"></i>
+            <input type="button" value="请选择" class="yun_reg_BasicInfo_but" id="status" onclick="search_show('job_status');"/>
+            <input type="hidden" id="statusid" name="jobstatus"/>
+         
+            <div class="yun_reg_BasicInfo_l_box none" id="job_status">
+              <ul class="yun_reg_BasicInfo_text_list">
+                {yun:}foreach from=$userdata.user_jobstatus key=j item=v{/yun}
+                <li><a href="javascript:;" onclick="selects('{yun:}$v{/yun}', 'status', '{yun:}$userclass_name[$v]{/yun}');"> {yun:}$userclass_name[$v]{/yun}</a></li>
+                {yun:}/foreach{/yun}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="yun_reg_BasicInfo_bot">
+        <input type="button" value="立即申请" class="yun_reg_BasicInfo_bth" onclick="checkaddresume();"/>
+      </div>
+    </div>
+  </div>
+</div>
+<!--注册弹出框2-->
+<div class="none" id="userregdiv">
+  <div class="yun_reg_box">
+    <div class="yun_reg_list_tip_s">保存成功；离完成只差一步</div>
+    <div class="yun_reg_Switching_box">
+      <ul class="yun_reg_list">
+        <li class="mt20"><em><font color="#FF0000">*</font> 用户名：</em>
+          <input type="text" class="yun_reg_text" id="reg_username"/>
+        </li>
+        <li class="mt20"><em><font color="#FF0000">*</font> 密&nbsp;&nbsp;码：</em> <span id="pass1">
+          <input type="password" class="yun_reg_text"id="reg_password"/>
+        </span> </li>
+        <li class="m10"><em><font color="#FF0000">*</font> 验证码：</em>
+          <input  type="text" class="yun_reg_text_yz" maxlength="4" id="reg_authcode"/>
+          <img id="vcodeimgs" class="authcode" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php"/><span class="reg_yz_look">看不清？ <a href="javascript:checkcodes();" class="yun_reg_a" rel="nofollow">换一张</a></span>                            
+        </li>
+        <li class="mt10"><em>&nbsp;</em>
+          <input type="hidden" id="resumeid"/>
+          <input type="button" value="保存" class="yun_reg_submit" onclick="checkreg();"/>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<input id="sqjobresume" value='1' type="hidden">
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun} 
+</body>
+</html>

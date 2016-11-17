@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{yun:}$title{/yun}-Powered by PHPYun.</title>
+<META name=keywords content="{yun:}$keywords{/yun}"> 
+<META name=description content="{yun:}$description{/yun}">
+<link rel="stylesheet" href="{yun:}$com_style{/yun}images/blus.css" type="text/css">
+<link rel="stylesheet" href="{yun:}$com_style{/yun}/images/style.css" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layer/layer.min.js" language="javascript"></script> 
+<script src="{yun:}$config.sy_weburl{/yun}/js/public.js" language="javascript"></script>
+<script> var weburl = "{yun:}$config.sy_weburl{/yun}"</script>
+</head>
+<body>
+<!--header头部-->
+<div class="c_q_header">
+  <div class="wrap">
+    <div class="c_head_tou">
+     <div class="c_tou_logo fl"> <span>{yun:}if $com.logo{/yun}<img src="{yun:}$com.logo{/yun}" width="185" height="75" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);" />{yun:}else{/yun}<img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}" width="185" height="75" />{yun:}/if{/yun}</span> </div>
+      <div class="wrap_l_name">
+       <span class="wrap_l_name_n">{yun:}$com.name{/yun}</span>
+      {yun:}if $com.email_status=="1"{/yun} 
+      <img src="{yun:}$com_style{/yun}images/rz_yx2.png" alt="邮箱未认证" title="邮箱已认证" class="png" /> 
+      {yun:}else{/yun} <img src="{yun:}$com_style{/yun}images/rz_yx.png" alt="邮箱未认证" title="邮箱未认证" class="png" />     {yun:}/if{/yun}
+        {yun:}if $com.moblie_status=="1"{/yun} 
+        <img src="{yun:}$com_style{/yun}images/rz_sj2.png" alt="手机未认证" title="手机已认证" class="png" /> 
+        {yun:}else{/yun} <img src="{yun:}$com_style{/yun}images/rz_sj.png" alt="手机未认证" title="手机未认证" class="png" /> {yun:}/if{/yun}
+        {yun:}if $com.yyzz_status=="1"{/yun} 
+        <img src="{yun:}$com_style{/yun}images/rz_zz2.png" alt="执照未认证" title="执照已认证" class="png" /> {yun:}else{/yun} <img src="{yun:}$com_style{/yun}images/rz_zz.png" alt="执照未认证" title="执照未认证" class="png" /> 
+        {yun:}/if{/yun}
+        {yun:}if $ComMember.source==6 && $ComMember.claim==0 && $ComMember.email!=""{/yun}
+        <a href="javascript:claim('{yun:}url m=ajax c=claim uid=$com.uid{/yun}');">认领</a>
+        {yun:}/if{/yun}
+        <div class="wrap_l_name_p"> {yun:}if $usertype=='1'{/yun}
+          {yun:}if $isatn.id{/yun} <a href="javascript:void(0)" onclick="atn('{yun:}$com.uid{/yun}','{yun:}url m=ajax c=atn_company{/yun}')" id='atn_{yun:}$com.uid{/yun}' class="wrap_l_name_gz">取消关注</a> {yun:}else{/yun} <a href="javascript:void(0)" onclick="atn('{yun:}$com.uid{/yun}','{yun:}url m=ajax c=atn_company{/yun}')" id='atn_{yun:}$com.uid{/yun}' class="wrap_l_name_gz">关注</a> {yun:}/if{/yun}
+          {yun:}else{/yun} 
+            {yun:}if $uid{/yun}
+            <a href="javascript:void(0)" onclick="layer.msg('只有个人用户才能关注', 2,8)" class="wrap_l_name_gz">关注</a> 
+            {yun:}else{/yun}
+            <a href="javascript:void(0)" onclick="showlogin('1');" class="wrap_l_name_gz">关注</a> 
+            {yun:}/if{/yun} 
+          {yun:}/if{/yun}
+          已有<font id="antnum{yun:}$com.uid{/yun}">{yun:}$com.ant_num{/yun}</font>人关注 </div>
+      </div>
+    </div>
+  </div>
+  <div class="clear"></div>
+</div>
+<!--头部结束-->
+<div class="clear"></div>
+<!--内容content-->
+<div class="c_q_content">
+  <div class="wrap">
+    <div class="c_q_cont">
+      <div class="c_cont_ban"><img src="{yun:}$banner.pic{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_banner{/yun}',2);"  width="980" height="300" /></div>
+      <div class="c_info_bao">
+        <div class="c_cont_info">
+          <div class="com_nav">
+            <ul>
+              <li class="com_nav_cur"><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#about">关于我们</a></li>
+              <li><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#contact">联系方式</a></li>
+              <li><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#job">招聘职位</a></li>
+              <li><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#pl">评论留言</a></li>
+              <li><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#show">企业环境</a></li>
+              <li><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#news">企业新闻</a></li>
+              <li><a href="{yun:}url m=company c=show id='`$com.uid`'{/yun}#news">产品展示</a></li>
+              <li><a href="{yun:}$config.sy_weburl{/yun}">人才网首页</a></li>
+            </ul>
+          </div>
+       
+       
+            <div class="index_left" style="width:960px;padding-top:20px; background:#fff">
+ <div class="index_h1" id="pl"><span class="index_h1_s">评论留言</span></div>
+      <div class="Comment_cont">
+        <div class="Job_comment">
+          <div class="Job_comment_left"> 
+		  {yun:}if $msglist{/yun}
+            <div class="Job_comment_left_c"> 
+			{yun:}foreach item=v from=$msglist{/yun}
+              <div class="Comment_list {yun:}if empty($msglist){/yun}none{yun:}/if{/yun}" >
+                <div class="Comment_time">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+                <div class="Comment_dd"></div>
+                <div class="Comment_icon2"></div>
+                <div class="Comment_list_right">
+                  <div class="Comment_w608"><span class="fl"> <a href="{yun:}url m=resume c=show uid=$v.uid{/yun}">{yun:}$v.name{/yun}</a>：{yun:}$v.content{/yun}</span> </div>
+                  {yun:}if $v.reply!=""{/yun}
+                  <div class="Comment_w608">
+                    <div class="tips_reply">企业回复：<span>{yun:}$v.reply{/yun}</span></div>
+                  </div>
+                  {yun:}/if{/yun} </div>
+              </div>
+              {yun:}/foreach{/yun} </div>
+            {yun:}else{/yun}
+            <div class="com_index_pl">还未有人评论过该企业，赶快来评论一下吧！！</div>
+            {yun:}/if{/yun} 
+			</div>
+          <div class="Job_comment_right" style="width:640px;"> 
+		  {yun:}if $usertype!=1{/yun}
+            <div class="Job_user_no" style="padding-top:20px; text-align:center">
+                <div class="Job_ask_bg_login">
+                {yun:}if $uid{/yun}
+                只有个人用户才可以评论
+                {yun:}else{/yun}
+                您还没有登录，请先【<a href="javascript:void(0);" onclick="showlogin('1');">登陆</a>】
+                {yun:}/if{/yun}
+                </div>
+            </div>
+            {yun:}else{/yun}
+            <div class="Job_Company_h1 fl"><span>我要评论</span></div>
+            <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" class="none"></iframe>
+            <form action="{yun:}url m=company c=compl id='`$com.uid`'{/yun}" target="supportiframe" method="post" onSubmit="return check_pl();">
+              <input type="hidden" name="id" value="{yun:}$com.uid{/yun}"/>
+              <div class="commpay_textarea">
+                <div class="Comment_list_top"></div>
+                <textarea  class="program_tooltip placeholder" id="content" name="content" data-rid="949"></textarea>
+              </div>
+		<div class="affirm affirm_yz"> 
+			<input class="zx_yx_input fl" id="msg_CheckCode" type="text"  placeholder="请输入验证码" value="" maxlength="4" name="authcode" >
+			<img  class="fl" id="vcode_imgs" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" onclick="check_codes();">
+		</div>
+              <div class="commpay_Comment_input">
+                <input class="program_reply_pl" type="submit" name="submit" value="提交评论">
+                <span>您对这个企业有什么看法？</span></div>
+            </form>
+            {yun:}/if{/yun}
+			</div>
+        </div>
+        <div class="clear"></div>
+		<div class="pages">{yun:}$pagenav{/yun}</div>
+      </div>
+      <div class="clear"></div>
+</div>
+    </div>
+  </div>    </div>
+</div> 
+<!--内容结束-->
+{yun:}include file="$tplstyle/public_search/login.htm"{/yun} 
+{yun:}include file="$tplstyle/footer.htm"{/yun} 

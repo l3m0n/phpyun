@@ -1,0 +1,45 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<script>
+function zxyd(){
+layermsg("手机端暂不支持展位预定");
+}
+</script>
+ {yun:}fairs limit=1 item=zphs {/yun}
+<div class="wap_zph_banner">
+     <div class="wap_zph_ct">
+          <div class="wap_zph_ct_tit">{yun:}$zphs.title{/yun}</div>
+          <div class="wap_zph_ct_job">已有 <a href="{yun:}url m=wap c=zph a=com id=$zphs.id{/yun}">{yun:}$zphs.jobnum{/yun}</a> 个职位 共有 <a href="{yun:}url m=wap c=zph a=com id=$zphs.id{/yun}">{yun:}$zphs.comnum{/yun}</a> 家企业参会</div>
+          <div class="wap_zph_ct_tm">[ {yun:}$zphs.starttime|date_format:"%Y-%m-%d"{/yun} 至 {yun:}$zphs.endtime|date_format:"%Y-%m-%d"{/yun} ]</div>
+          <div class="wap_zph_ct_but">
+               <a class="wap_zph_ct_but_zx" href="javascript:void(0);" onclick="return zxyd();">在线预订</a>
+               <a class="wap_zph_ct_but_ck" href="{yun:}url m=wap c=zph a=show id='`$zphs.id`'{/yun}">查看详情 &gt;&gt;</a>
+          </div>
+     </div>
+     <div class="wap_zph_ct_pot">——&nbsp;&nbsp;会场地址：{yun:}$zphs.address{/yun}&nbsp;——</div>
+</div>
+ {yun:}/fairs{/yun}
+ 
+<section>
+  <div class="warp_content clear">
+
+        <div class="job_list_content">
+      {yun:}fairs ispage=1 limit=5 item=zph {/yun}
+           <div class="job_list_box job_fair_state_ov"> 
+           {yun:}if $zph.stime<'0'&&$zph.etime>'0'{/yun}
+           <div class="job_fair_state ">已开始</div>
+         {yun:}elseif $zph.stime>'0'{/yun}
+         <div class="job_fair_state job_fair_state_yd">预定中</div>      
+         {yun:}/if{/yun}
+         <a href="{yun:}url m=wap c=zph a=show id='`$zph.id`'{/yun}">
+         <div class="job_fair_name">{yun:}$zph.title{/yun}</div>
+         <div class="job_fair_time">{yun:}$zph.starttime|date_format:"%Y-%m-%d"{/yun} 至 {yun:}$zph.endtime|date_format:"%Y-%m-%d"{/yun}</div>
+         <div class="job_fair_add">{yun:}$zph.address{/yun}</div>
+         </a>
+         </div>  
+          {yun:}/fairs{/yun}
+          <div class="pages">{yun:}$pagenav{/yun}</div>
+      <div class="clear"></div>
+      </div>
+  </div>
+</section>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

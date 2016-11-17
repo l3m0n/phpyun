@@ -1,0 +1,19 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+{yun:}include file="$wapstyle/nav.htm"{/yun} 
+{yun:}foreach from=$rows item=qlist{/yun}
+<div class="askfriend_ct">
+  <div class="question_tit"><a href="{yun:}url m=wap c=ask a=content id='`$qlist.id`'{/yun}">{yun:}$qlist.title{/yun}</a></div>
+  <div class="question_gz"> <span class="question_gz_d"><i>{yun:}$qlist.atnnum{/yun}</i>人关注</span> <span class="question_gz_a"><i>{yun:}$qlist.answer_num{/yun}</i>个回答</span> <span class="question_gz_c"><i>{yun:}$qlist.visit{/yun}</i>次浏览</span> </div>
+  <div class="question_mm">
+    <div class="question_tm">{yun:}$qlist.add_time|date_format:"%Y-%m-%d %H:%M"{/yun}</div>
+    {yun:}if $uid==$info.uid{/yun}
+    <div class="question_de"><a href="javascript:void(0)" onclick="layer_del('确定要删除该关注？','{yun:}url m=wap c=ask a=attention id=$qlist.id{/yun}')">删除</a></div>
+    {yun:}/if{/yun} </div>
+</div>
+{yun:}foreachelse{/yun}
+<div class="noresult">暂无关注问题！</div>
+{yun:}/foreach{/yun} 
+
+<div class="clear"></div>
+<div class="pages">{yun:}$pagenav{/yun}</div>
+{yun:}include file="$wapstyle/footer.htm"{/yun}

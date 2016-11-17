@@ -1,0 +1,63 @@
+{yun:}include file="$comstyle/header.htm"{/yun}
+<div class="w1000">
+  <div class="admin_mainbody"> {yun:}include file="$comstyle/left.htm"{/yun}
+    <div class=right_box>
+      <div class=admincont_box >
+       <div class="com_tit">
+            <div class="com_tit_span fl">在线提交问题 / 建议</div>
+       </div>
+        <div class="com_body"> 
+         <div class=admin_note2>
+         <div class="yj_tip_hi">Hi，欢迎提交任何关于{yun:}$config.sy_webname{/yun}的问题和建议，我们将尽快回复您。感谢您对{yun:}$config.sy_webname{/yun}的帮助。:)</div>
+         <div class="yj_tip">
+        您喜欢新版{yun:}$config.sy_webname{/yun}吗？我们倾听您的建议 :)<br>
+         如果提交有关浏览速度、系统BUG、视觉显示等问题，请注明您使用的操作系统、浏览器，以便我们尽快对应查找问题并解决。
+         </div>
+         <div class="yj_tw_content">
+         <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+          <form name="MyForm" onsubmit="return Showsub();" target="supportiframe" action='index.php?c=message' method="post">
+         <div class="yj_tw_list"><span class="yj_tw_list_name">内容：</span> <textarea id="content" name="content" cols="60" rows="6" class="yj_tw_list_textarea"></textarea></div>
+          <div class="yj_tw_list"><span class="yj_tw_list_name">&nbsp;</span><input type="submit" name="add_message"  value="提交" class="yj_tw_list_bth"></div>
+               </form>
+         </div>
+        <div class="yj_tw_list_c">
+        {yun:}if $rows{/yun}
+        <div class="List_Ope List_Title ">
+           
+            <span class="List_Title_span List_Title_w430">我反馈的问题</span>
+            <span class="List_Title_span List_Title_w170" style="text-align:center">反馈时间</span>
+            <span class="List_Title_span List_Title_w100">操作</span>
+        </div>
+        {yun:}/if{/yun}
+        {yun:}foreach item=v from=$rows{/yun}
+        <div class="List_Ope List_Ope_bor">
+      
+        <span class="List_Title_span List_Title_w430">{yun:}$v.content{/yun}</span>
+        <span class="List_Title_span List_Title_w170"  style="text-align:center">{yun:}$v.ctime|date_format:"%Y-%m-%d %H:%M"{/yun}</span>
+        <span class="List_Title_span List_Title_w100">
+        <a class="List_dete" onclick="layer_del('确定要删除？','index.php?c=seemessage&act=del&id={yun:}$v.id{/yun}');" href="javascript:void(0)">删除</a>
+        </span>
+        {yun:}if $v.status==1{/yun}
+        <div class="List_Title_content List_Title_content_Advisory_bor">
+        <em class="List_Title_content_Advisory_r2">
+        <span class="List_Title_conten_tit">回复时间：</span>
+        {yun:}$v.reply_time|date_format:"%Y-%m-%d %H:%M"{/yun}
+        </em>
+        <span class="List_Title_conten_tit List_Title_conten_tit_cor">管理员回复：</span>
+        {yun:}$v.reply{/yun}
+        </div>
+        {yun:}/if{/yun}
+        </div>
+        {yun:}foreachelse{/yun}
+       
+        {yun:}/foreach{/yun}
+          <div class="clear"></div>
+          <div class="diggg">{yun:}$pagenav{/yun}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+{yun:}include file="$comstyle/footer.htm"{/yun}

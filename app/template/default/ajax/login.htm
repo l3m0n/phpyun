@@ -1,0 +1,172 @@
+<script>
+$(document).ready(function(){
+	$("#usertype1").click(function(){
+		$("#reg_url_1").show();
+		$("#reg_url_2").hide();
+		$("#usertype").val("1");
+		$("#usertype1").attr("class","");
+		$("#usertype2").attr("class","index_logoin_current1");
+	});
+	$("#usertype2").click(function(){
+		$("#reg_url_2").show();
+		$("#reg_url_1").hide();
+		$("#usertype").val("2");
+		$("#usertype2").attr("class","");
+		$("#usertype1").attr("class","index_logoin_current2");
+	});
+});
+$(document).ready(function(){
+	$("#username").focus(function(){
+		var txAreaVal = $(this).val();
+		if( txAreaVal == this.defaultValue){$(this).val("");}
+	}).blur(function(){
+		var txAreaVal = $(this).val();
+		if( txAreaVal == this.defaultValue||$(this).val()==""){$(this).val(this.defaultValue);}
+	});
+	$("#txt_CheckCode").focus(function(){
+		var txAreaVal = $(this).val();
+		if( txAreaVal == this.defaultValue){$(this).val("");}
+	}).blur(function(){
+		var txAreaVal = $(this).val();
+		if( txAreaVal == this.defaultValue||$(this).val()==""){$(this).val(this.defaultValue);}
+	});
+	$("#password2").focus(function(){
+		$("#password").show();
+		$("#password").focus();
+		$("#password2").hide();
+	})
+	$("#password").blur(function(){
+		if($("#password").val()==""){
+			$("#password2").show();
+			$("#password").hide();
+		}
+	})
+});
+
+$(document).ready(function(){
+	$("#username,#txt_CheckCode").focus(function(){
+		var txAreaVal = $(this).val();
+		if( txAreaVal == this.defaultValue){$(this).val("");}
+	}).blur(function(){
+		var txAreaVal = $(this).val();
+		if( txAreaVal == this.defaultValue||$(this).val()==""){$(this).val(this.defaultValue);}
+	}).keydown(function (e) {
+	    var ev = document.all ? window.event : e;
+	    if (ev.keyCode == 13) {
+	        check_login('{yun:}url m=login c=loginsave{/yun}');
+	    } else { return;}
+	});
+	$("#password2").focus(function(){
+		$("#password").show();
+		$("#password").focus();
+		$("#password2").hide();
+	})
+	$("#password").blur(function(){
+		if($("#password").val()==""){
+			$("#password2").show();
+			$("#password").hide();
+		}
+	}).keydown(function (e) {
+	    var ev = document.all ? window.event : e;
+	    if (ev.keyCode == 13) {
+	        check_login('{yun:}url m=login c=loginsave{/yun}');
+	    } else { return; }
+	});
+});
+function jobaddurl(num,integral_job,integral_pricename){ 
+	if(num==0){
+		var msg='套餐已用完，请先购买会员，<br>您还可以<a href="'+weburl+'/member/index.php?c=right" style="color:red;">购买会员</a>！';
+		layer.confirm(msg, function(){ 
+			window.open(weburl+'/index.php?c=right');  
+		});
+	}else if(num==2){
+		var msg='套餐已用完，继续操作将会扣除'+integral_job+' '+integral_pricename+'，您还可以<a href="'+weburl+'/member/index.php?c=right" style="color:red">购买会员</a>，是否继续？';
+		layer.confirm(msg, function(){
+			window.open(weburl+'/member/index.php?c=jobadd');   
+		});
+	}
+}
+</script>
+{yun:}if $usertype=="1"{/yun}
+<div class="index_logoin_after">
+  <div class="hunter_logoin_bg">
+    <dl class="logoin_after_tx">
+      <dt style="width:48px;"><img width="40" height="50" src="{yun:}$member.photo{/yun}" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);"></dt>
+      <dd>
+        <div class="login_af_name">您好：<font color="red">{yun:}$username{/yun}</font></div>
+       个人用户</dd>
+    </dl>
+    <div class="logoin_after_cj">您已创建了 (<a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=resume"><u>{yun:}$member.resume_num{/yun}</u></a>) 份简历！</div>
+    <div class="hunter_logoin_list"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=expect&add={yun:}$uid{/yun}" class="logoin_after_su1">创建简历</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=resume" class="logoin_after_su2">管理简历</a></div>
+    <div class="logoin_after"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=job"> 已申请的职位：</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=job"><em>{yun:}$member.sq_jobnum{/yun}</em></a></div>
+    <div class="logoin_after"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=favorite"> 收藏的职位：</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=favorite"><em>{yun:}$member.fav_jobnum{/yun}</em></a></div>
+    <div class="logoin_after_cz"><a href="javascript:void(0);" onclick="logout('{yun:}url c=logout{/yun}');"> 安全退出</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php" class="in_l_cor">进入管理中心</a></div>
+  </div>
+</div>
+{yun:}elseif $usertype=="2"{/yun}
+<div class="index_logoin_after">
+  <div class="hunter_logoin_bg">
+    <dl class="logoin_after_tx">
+      <dt style="width:80px;height:58px;"><img width="70" height="28" src="{yun:}$company.logo{/yun}"  onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_unit_icon{/yun}',2);"></dt>
+      <dd >
+        <div class="login_af_name">您好：<font color="red">{yun:}$username{/yun}</font></div>
+      企业用户</dd>
+    </dl>
+    <div class="logoin_after_cj">您已发布了 (<a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=job&w=1"><u>{yun:}$company.job{/yun}</u></a>)个职位！</div>
+    <div class="hunter_logoin_list">
+	{yun:}if $addjobnum=='1'{/yun}
+	<a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=jobadd" class="logoin_after_su1">发布职位</a>
+	{yun:}else{/yun}
+	<a href="javascript:void(0)" onclick="jobaddurl('{yun:}$addjobnum{/yun}','{yun:}$config.integral_job{/yun}','{yun:}$config.integral_pricename{/yun}')" class="logoin_after_su1">发布职位</a>
+	{yun:}/if{/yun}
+	
+	
+	<a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=job&w=1" class="logoin_after_su2">职位管理</a></div>
+    <div class="logoin_after"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=hr"> 已收到简历：</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=hr"><em>{yun:}$company.sq_job{/yun}</em></a></div>
+    <div class="logoin_after"><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=job&w=2"> 已过期职位：</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php?c=job&w=2"><em>{yun:}$company.status2{/yun}</em></a></div>
+    <div class="logoin_after_cz"><a href="javascript:void(0);" onclick="logout('{yun:}url c=logout{/yun}');"> 安全退出</a><a href="{yun:}$config.sy_weburl{/yun}/member/index.php" class="in_l_cor">进入管理中心</a></div>
+  </div>
+</div> 
+{yun:}else{/yun}
+
+
+<div class="yun_Indexlogin_tit"> <span class="yun_Indexlogin_tit_s"><i class="yun_Indexlogin_tit_line yun_z_bg"></i>用户登录<i class="yun_Indexlogin_tit_sw"></i></span></div>
+<div class="yun_Indexlogin_box ">
+<div class="yun_Indexlogin_text">
+<div><i class="yun_Indexlogin_icon"></i></div>
+<input type="text" id="username" name="username" value="邮箱/手机号/用户名" class="yun_Indexlogin_t">
+ <div class="index_logoin_msg none" id="show_name">
+        <div class="index_logoin_msg_tx">请填写用户名</div>
+        <div class="index_logoin_msg_icon"></div>
+   </div>
+</div>
+<div class="yun_Indexlogin_text">
+<div><i class="yun_Indexlogin_icon yun_Indexlogin_icon_m"></i></div>
+<input type="text" id="password2" value="请输入密码" class="yun_Indexlogin_t">
+<input type="password" id="password" name="password" class="yun_Indexlogin_t none" value="">
+      <div class="index_logoin_msg none" id="show_pass">
+	   <div class="index_logoin_msg_tx">请填写密码</div>
+	   <div class="index_logoin_msg_icon"></div>
+</div>
+</div>
+<div class="yun_Indexlogin_yzm_t">
+
+{yun:}if stripos($config.code_web,"前台登陆")!==false{/yun}
+<div><i class="yun_Indexlogin_icon yun_Indexlogin_yzm_icon"></i></div>
+<input type="text" id="txt_CheckCode" name="authcode" value="验证码"class="yun_Indexlogin_yzm" maxlength="4">
+<a href="javascript:void(0);" onclick="check_codes();"><img id="vcode_imgs" src="{yun:}$config.sy_weburl{/yun}/app/include/authcode.inc.php" width="60" height="30" class="yun_Indexlogin_yzm_img"></a>
+<a href="javascript:void(0);" onclick="check_codes();" class="yun_Indexlogin_icon_m_hyh">换一换？</a>
+{yun:}else{/yun}
+<div class="yun_Indexlogin_zddl"><input type="checkbox" value=""> 下次自动登录</div>
+{yun:}/if{/yun}
+</div>
+
+
+<div class="yun_Indexlogin_sub"><input type="submit" value="立即登录" class="yun_Indexlogin_bth" onclick="check_login('{yun:}url m=login c=loginsave{/yun}');"></div>
+<div class="yun_Indexlogin_sub_fotg">还没有注册账号？<a href="{yun:}url m=forgetpw{/yun}" class="yun_Indexlogin_ft ">忘记密码?</a></div>
+<div class="yun_Indexlogin_p"><a href="{yun:}url m=register usertype=2{/yun}" class="yun_text_color_login yun_text_color">企业注册</a><a href="{yun:}url m=register usertype=1{/yun}" class="yun_text_color_login_gr yun_text_color">个人注册</a></div>
+
+</div>
+
+
+{yun:}/if{/yun}

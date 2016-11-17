@@ -1,0 +1,39 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<script src="{yun:}$wap_style{/yun}/js/redeem.js" language="javascript"></script>
+<div class="wap_list_nav">
+     <div class="nav_ft fl">   
+         商品分类
+          <div class="nav_ft_list" style="display:none;">
+               <ul>
+					<li class="{yun:}if $smarty.get.id==''{/yun}current{yun:}/if{/yun}"><a href="{yun:}url m=wap c=redeem a=list{/yun}">全部</a></li>
+               		{yun:}foreach item=v from=$redeem_index{/yun}
+					<li class="{yun:}if $smarty.get.id==$v{/yun}current{yun:}/if{/yun}"><a href="{yun:}searchurl m=wap c=redeem a=list id=$v untype='id'{/yun}">{yun:}$redeem_name[$v]{/yun}</a></li>
+                   {yun:}/foreach{/yun}
+               </ul>
+          </div>
+     </div>
+     <div class="nav_rt fr">   
+        排序方式
+          <div class="nav_rt_list" style="display:none;">
+               <ul>
+                   <li class="{yun:}if $smarty.get.t=='sdate'{/yun}current{yun:}/if{/yun}"><a href="{yun:}url m=wap c=redeem a=list order=desc t=sdate{/yun}">默认排序</a></li>
+                   <li class="{yun:}if $smarty.get.t=='sort'{/yun}current{yun:}/if{/yun}"><a href="{yun:}url m=wap c=redeem a=list order=desc t=sort{/yun}">人气</a></li>
+                   <li class="{yun:}if $smarty.get.t=='integral'{/yun}current{yun:}/if{/yun}"><a href="{yun:}url m=wap c=redeem a=list order=desc t=integral{/yun}">积分</a></li>
+               </ul>
+          </div>
+     </div>
+</div>
+{yun:}foreach item=val key=jj from=$rows{/yun}
+<a href="{yun:}url m=wap c=redeem a=show id='`$val.id`'{/yun}">
+<div class="wap_list_ct">
+     <dl>
+        <dt><img width="80px" height="80px" src="{yun:}$config.sy_weburl{/yun}/{yun:}$val.pic{/yun}" /></dt>
+        <dd class="wap_list_ct_ve">{yun:}$val.name{/yun}</dd>
+        <dd class="wap_list_ct_fn">所需积分：<em>{yun:}$val.integral{/yun}</em>{yun:}$config.integral_pricename{/yun}</dd>
+     </dl>
+</div>
+</a>
+{yun:}/foreach{/yun}
+ <div class="pages" style="margin-top:10px;">{yun:}$pagenav{/yun}</div>
+
+{yun:}include file="$wapstyle/footer.htm"{/yun} 

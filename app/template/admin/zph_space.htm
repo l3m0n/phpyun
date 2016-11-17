@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<link href="images/reset.css" rel="stylesheet" type="text/css" />
+<link href="images/system.css" rel="stylesheet" type="text/css" /> 
+<link href="images/table_form.css" rel="stylesheet" type="text/css" />
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layer/layer.min.js" language="javascript"></script>
+<script src="js/admin_public.js" language="javascript"></script> 
+<script>  
+function clickname(id){
+	if(document.getElementById('msg'+id).style.display=='none'){
+		document.getElementById('msg'+id).style.display='block';
+		$("#msg"+id).attr("class","open");
+		}else{
+		document.getElementById('msg'+id).style.display='none';
+		$("#msg"+id).attr("msg","close");
+	}
+}
+function showclassall(id,type){
+	if(type==1){
+		$("#img"+id).html('<a href="javascript:;" onclick="showclassall(\''+id+'\',\'2\');"><img src="images/iconv/jian.png"></a>');
+		$(".class"+id).show();
+	}else{
+		$("#img"+id).html('<a href="javascript:;" onclick="showclassall(\''+id+'\',\'1\');"><img src="images/iconv/jia.png"></a>');
+		$(".class"+id).hide();
+	}
+}
+</script>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<span id="temp"></span>
+<div class="infoboxp">
+<div class="infoboxp_top_bg"></div>
+<div class="infoboxp_top">
+<span class="admin_title_span">招聘会场地管理</span>
+<a  href="index.php?m=zph_space&c=classadd" class="admin_infoboxp_tj">添加区域</a>
+</div>
+<div class="table-list">
+  <div class="admin_table_border">
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe> 
+  <form action="index.php?m=zph_space&c=del" method="post" id='myform' target="supportiframe">   
+  <input type="hidden" name="pytoken" id='pytoken' value="{yun:}$pytoken{/yun}">
+<table width="100%">
+	<thead>
+	<tr class="admin_table_top">
+		<th width="50"><label for="chkall"> <input type="checkbox" id='chkAll' onclick='CheckAll(this.form)' /></label></th>
+		<th>编号</th>
+		<th>名称<span class="clickup">(点击修改)</span></th>
+        <th width="100">排序</th>
+		<th width="220" class="admin_table_th_bg">操作</th>
+	</tr>
+	</thead>
+	<tbody>	
+    {yun:}if empty($id){/yun}
+	{yun:}foreach item=v key=key from=$position{/yun}
+	
+	<tr align="center" {yun:}if ($key+1)%2=='0'{/yun}class="admin_com_td_bg"{yun:}/if{/yun} id="list{yun:}$v.id{/yun}">
+   		<td width="50"><input type="checkbox" value="{yun:}$v.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+		<td class="ud">{yun:}$v.id{/yun}</td>
+		<td  align="left" >一级分类：
+        <span onClick="checkname('{yun:}$v.id{/yun}');" id="name{yun:}$v.id{/yun}" style="cursor:pointer;">{yun:}$v.name{/yun}</span>
+        <input class="input-text hidden" type="text" id="inputname{yun:}$v.id{/yun}"value="{yun:}$v.name{/yun}" onBlur="subname('{yun:}$v.id{/yun}','index.php?m=zph_space&c=ajax');"></td>
+       
+        <td><span onClick="checksort('{yun:}$v.id{/yun}');" id="sort{yun:}$v.id{/yun}" style="cursor:pointer;">{yun:}$v.sort{/yun}</span>
+        <input class="input-text hidden" type="text" id="input{yun:}$v.id{/yun}" size="10" value="{yun:}$v.sort{/yun}" onBlur="subsort('{yun:}$v.id{/yun}','index.php?m=zph_space&c=ajax');"></td>
+		<td class="ud">
+			<A href="{yun:}$config.sy_weburl{/yun}/{yun:}$v.pic{/yun}" class="admin_cz_sc" target="_blank">场地预览</A> | 
+        	<A href="index.php?m=zph_space&c=classadd&id={yun:}$v.id{/yun}" class="admin_cz_sc">修改</A> | 
+            <A href="index.php?m=zph_space&c=up&id={yun:}$v.id{/yun}" class="admin_cz_sc">位置管理</A> | 
+            <A href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=zph_space&c=del&delid={yun:}$v.id{/yun}');" class="admin_cz_sc">删除</a>
+        </td>
+	</tr>
+	
+    {yun:}/foreach{/yun}
+    {yun:}/if{/yun}
+	{yun:}if $id{/yun}
+	<tr align="center" id="list{yun:}$onejob.id{/yun}">
+   		<td width="50"><input type="checkbox" value="{yun:}$onejob.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+		<td class="ud" width="60">{yun:}$onejob.id{/yun}</td>
+		<td class="ud"  align="left" colspan="2">一级分类：<span onClick="checkname('{yun:}$onejob.id{/yun}');" id="name{yun:}$onejob.id{/yun}" style="cursor:pointer;">{yun:}$onejob.name{/yun}</span><input class="input-text hidden" type="text" id="inputname{yun:}$onejob.id{/yun}"value="{yun:}$onejob.name{/yun}" onBlur="subname('{yun:}$onejob.id{/yun}','index.php?m=zph_space&c=ajax');">
+        <b id="img{yun:}$two.id{/yun}"><a href="javascript:;" onclick="showclassall('{yun:}$two.id{/yun}','1');"><img src="images/iconv/jia.png"></a></b>
+        </td>
+        <td><span onClick="checksort('{yun:}$onejob.id{/yun}');" id="sort{yun:}$onejob.id{/yun}" style="cursor:pointer;">{yun:}$onejob.sort{/yun}</span><input class="input-text hidden" type="text" id="input{yun:}$onejob.id{/yun}" size="10" value="{yun:}$onejob.sort{/yun}" onBlur="subsort('{yun:}$onejob.id{/yun}','index.php?m=zph_space&c=ajax');"></td>
+		<td class="ud" width="180"><A href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=zph_space&c=del&delid={yun:}$onejob.id{/yun}');" class="admin_cz_sc">删除</a></td>
+	</tr>
+	{yun:}foreach item=two from=$twojob{/yun}
+    {yun:}assign var="two_class_id" value=$two.id{/yun}
+	<tr align="center" id="list{yun:}$two.id{/yun}">
+    	<td width="50"><input type="checkbox" value="{yun:}$two.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+		<td class="ud" >{yun:}$two.id{/yun}</td>
+		<td   align="left" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;
+        二级分类：┗<span onClick="checkname('{yun:}$two.id{/yun}');" id="name{yun:}$two.id{/yun}" style="cursor:pointer;">{yun:}$two.name{/yun}</span>
+        <input class="input-text hidden" type="text" id="inputname{yun:}$two.id{/yun}"value="{yun:}$two.name{/yun}" onBlur="subname('{yun:}$two.id{/yun}','index.php?m=zph_space&c=ajax');">
+		<b id="img{yun:}$two.id{/yun}"><a href="javascript:;" onclick="showclassall('{yun:}$two.id{/yun}','1');"><img src="images/iconv/jia.png"></a></b>
+        </td>
+        <td><span onClick="checksort('{yun:}$two.id{/yun}');" id="sort{yun:}$two.id{/yun}" style="cursor:pointer;">{yun:}$two.sort{/yun}</span>
+        <input class="input-text hidden" type="text" id="input{yun:}$two.id{/yun}" size="10" value="{yun:}$two.sort{/yun}" onBlur="subsort('{yun:}$two.id{/yun}','index.php?m=zph_space&c=ajax');"></td>
+		<td class="ud"><A href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=zph_space&c=del&delid={yun:}$two.id{/yun}');"class="admin_cz_sc">删除</a></td>
+	</tr>
+    {yun:}foreach item=three from=$threejob[$two_class_id]{/yun}
+    {yun:}assign var="three_class_arr" value=$threejob[$two_class_id]{/yun}
+	<tr align="center" id="list{yun:}$three.id{/yun}" class="class{yun:}$two.id{/yun}" style="display:none;">
+    	<td width="50"><input type="checkbox" value="{yun:}$three.id{/yun}" name='del[]' onclick='unselectall()' rel="del_chk" /></td>
+		<td class="ud">{yun:}$three.id{/yun}</td>
+		<td class="ud"  align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+         ┗<span onClick="checkname('{yun:}$three.id{/yun}');" id="name{yun:}$three.id{/yun}" style="cursor:pointer;">{yun:}$three.name{/yun}</span>
+        <input class="input-text hidden" type="text" id="inputname{yun:}$three.id{/yun}"value="{yun:}$three.name{/yun}" onBlur="subname('{yun:}$three.id{/yun}','index.php?m=zph_space&c=ajax');"></td>
+        
+        <td><span onClick="checksort('{yun:}$three.id{/yun}');" id="sort{yun:}$three.id{/yun}" style="cursor:pointer;">{yun:}$three.sort{/yun}</span>
+        <input class="input-text hidden" type="text" id="input{yun:}$three.id{/yun}" size="10" value="{yun:}$three.sort{/yun}" onBlur="subsort('{yun:}$three.id{/yun}','index.php?m=zph_space&c=ajax');"></td>
+		<td class="ud"><A href="javascript:void(0)" onClick="layer_del('确定要删除？', 'index.php?m=zph_space&c=del&delid={yun:}$three.id{/yun}');"class="admin_cz_sc">删除</a></td>
+	</tr>
+	
+    {yun:}/foreach{/yun}
+	{yun:}/foreach{/yun}
+	{yun:}/if{/yun}
+  <tr style="background:#f1f1f1;">
+    <td align="center"><input type="checkbox" id='chkAll2' onclick='CheckAll2(this.form)' /></td>
+    <td colspan="5" >
+    <label for="chkAll2">全选</label>&nbsp;
+    <input class="admin_submit4"  type="button" name="delsub" value="删除所选"  onclick="return really('del[]')"/></td>
+    </tr>
+	</tbody>
+</table>
+</form>
+</div>
+</div>
+</div> 
+</body>
+</html>

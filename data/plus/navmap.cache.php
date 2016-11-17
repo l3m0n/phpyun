@@ -1,0 +1,14 @@
+<?php 
+$navmap=array('0'=>array('0'=>array('id'=>'1','name'=>'找工作','url'=>'job/','furl'=>'','eject'=>'1','type'=>'1')
+,'1'=>array('id'=>'2','name'=>'找人才','url'=>'resume/','furl'=>'','eject'=>'1','type'=>'1')
+,'2'=>array('id'=>'3','name'=>'找企业','url'=>'company/','furl'=>'','eject'=>'1','type'=>'1')
+,'3'=>array('id'=>'4','name'=>'店铺招聘','url'=>'once/','furl'=>'','eject'=>'1','type'=>'1')
+,'4'=>array('id'=>'5','name'=>'普工招聘','url'=>'tiny/','furl'=>'','eject'=>'1','type'=>'1')
+,'5'=>array('id'=>'6','name'=>'职场资讯','url'=>'article','furl'=>'','eject'=>'1','type'=>'1')
+,'6'=>array('id'=>'7','name'=>'招聘会','url'=>'zph/','furl'=>'','eject'=>'1','type'=>'1')
+,'7'=>array('id'=>'8','name'=>'兼职','url'=>'part/','furl'=>'','eject'=>'1','type'=>'1')
+,'8'=>array('id'=>'10','name'=>'商城','url'=>'redeem/','furl'=>'','eject'=>'1','type'=>'1')
+)
+)
+; 
+?>

@@ -1,0 +1,68 @@
+{yun:}include file="$wapstyle/member/header.htm"{/yun}
+<div class="index_header">
+  <div class="user_header_img">
+    <div class="user_header_bg"><a href="index.php?c=photo"><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$rightinfo.photo{/yun}" border="0" onerror="showImgDelay(this,'{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_member_icon{/yun}',2);"></a></div>
+  </div>
+  <div class="member_header_info">
+    <div class="m_user_name">{yun:}$username{/yun} <a href="index.php?c=info" class="m_infor_bj"><i class="m_icon_bj yun_wap_usericonfont"></i>编辑</a></div>
+    <div class="m_user_re">简历完整度：
+      {yun:}if $expect.integrity{/yun}
+      <div class="container">
+        <div class="progress">
+          <div class="progress-bar" style="width:{yun:}$expect.integrity{/yun}%"></div>
+        </div>
+        <span class="progress-bar-bf">{yun:}$expect.integrity{/yun}%</span> </div>
+      {yun:}else{/yun}
+      暂无简历<a href="index.php?c=addresume" class="index_resumi_sub">创建简历</a> {yun:}/if{/yun} </div>
+  </div>
+</div>
+<section>
+  <div class="m_index_msg">
+    <dl class="m_index_msg_list">
+      {yun:}if $wkyqnum{/yun}<i class="m_index_msg_list_number">{yun:}$wkyqnum{/yun}</i>{yun:}/if{/yun} <a href="index.php?c=invite">
+      <dt>{yun:}$yqnum{/yun}</dt>
+      <dd>面试通知</dd>
+      </a>
+    </dl>
+    <dl class="m_index_msg_list">
+      <a href="index.php?c=sq">
+      <dt>{yun:}$statis.sq_jobnum{/yun}</dt>
+      <dd>申请记录</dd>
+      </a>
+    </dl>
+    <dl class="m_index_msg_list">
+      <a href="index.php?c=collect">
+      <dt>{yun:}$statis.fav_jobnum{/yun}</dt>
+      <dd>收藏记录</dd>
+      </a>
+    </dl>
+  </div>
+</section>
+<div class="index_section">
+  <section class="wap_member">
+  <div class="wap_member_mrecord"> <a href="index.php?c=resume" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_jl"></i>简历管理</a> <a href="index.php?c=invite" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_tz"></i>面试通知</a> <a href="index.php?c=sq" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_sq"></i>申请的职位</a> <a href="index.php?c=look" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_look"></i>谁看过我的简历</a> <a href="index.php?c=collect" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_sc"></i>收藏的职位</a> </div>
+  <section class="wap_member">
+    <div class="wap_member_mrecord"> <a href="index.php?c=partapply" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_bm"></i>报名的兼职</a> <a href="index.php?c=partcollect" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_sc"></i>收藏的兼职</a> <a href="index.php?c=look_job" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_yl"></i>我浏览过的职位</a> </div>
+  </section>
+  <section class="wap_member">
+    <div class="wap_member_mrecord"> <a href="index.php?c=info" class="wap_member_mrecord_list"><i class="m_icon wap_member_nav_icon_info"></i>基本信息</a> <a href="index.php?c=reward_list" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_dh"></i>兑换记录</a> <a href="index.php?c=binding" class="wap_member_mrecord_list"><i class="m_icon  wap_member_nav_icon_bd"></i>账户绑定</a> <a href="index.php?c=password" class="wap_member_mrecord_list "><i class="m_icon  wap_member_nav_icon_sz"></i>更改密码</a> <a href="javascript:;" onclick="islogout('{yun:}url m=wap c=loginout{/yun}','确认退出吗？');" class="wap_member_mrecord_list" style="border:none"><i class="m_icon wap_member_nav_icon_tc"></i>退出登录</a> </div>
+  </section>
+</div>
+
+<div id="yingdao" {yun:}if $expect.integrity{/yun}style="display:none;"{yun:}/if{/yun} style="width:100%;height:100%; background:rgba(51,51,51,0.6); position:fixed;left:0px;top:0px; z-index:100000;display:block;">
+  <div style="width:100%; position:absolute;left:0px;top:140px;">
+    <div style="padding:20px;">
+      <div class="user_resume_index_tit">亲，你还没有创建简历</div>
+      <div class="user_resume_index_tip">为了更快的找到工作，创建属于自己的简历吧！</div>
+      <div class="user_resume_index_tip_p"><a href="index.php?c=addresume" class="user_resume_index_tip_sub">创建简历</a></div>
+      <div class="user_resume_index_tip_p2"><a href="javascript:Close_yd();" class="user_resume_index_tip_p2_a">下次再说</a></div>
+    </div>
+  </div>
+</div>
+<script>
+function Close_yd(){
+	$(".user_resume_index_tip_p2_a").hide();
+	$("#yingdao").hide();
+}
+</script> 
+{yun:}include file="$wapstyle/footer.htm"{/yun}

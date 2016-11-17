@@ -1,0 +1,411 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<script src="{yun:}$config.sy_weburl{/yun}/js/jquery-1.8.0.min.js"></script>
+<script src="js/check_public.js"></script>
+<script src="js/admin_public.js"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/js/layer/layer.min.js" language="javascript"></script>
+<script src="{yun:}$config.sy_weburl{/yun}/app/template/member/com/js/part.js" language="javascript"></script> 
+<script charset="utf-8" src="../js/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="../js/kindeditor/lang/zh_CN.js"></script>
+<script language="javascript">
+var editor;
+var editors;
+KindEditor.ready(function(K){
+	editor = K.create('#content',{
+		resizeType : 1,
+		allowPreviewEmoticons : false,
+		allowImageUpload : false,
+		items : ['source',
+		'bold', 'italic', 'underline',
+		'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+		'insertunorderedlist','emoticons'] 
+	});
+});
+var weburl="{yun:}$config.sy_weburl{/yun}";
+function change(){
+	if($("#timetype").attr("checked")=='checked'){
+		$("#edate").hide();
+	}else{
+		$("#edate").show();
+	}
+}
+</script>
+<link href="images/reset.css" rel="stylesheet" type="text/css" />
+<link href="images/system.css" rel="stylesheet" type="text/css" />
+<link href="images/table_form.css" rel="stylesheet" type="text/css" />
+
+<style>
+* {margin: 0 ;padding: 0;}
+body,div{ margin: 0 ;padding: 0;}
+</style>
+<title>后台管理</title>
+</head>
+<body class="body_ifm">
+<div class="infoboxp">
+<div class="infoboxp_top_bg"></div>
+  <div class="infoboxp_top">
+    <h6>职位详情</h6>
+  </div>
+  <div class="admin_table_border">
+  <iframe id="supportiframe"  name="supportiframe" onload="returnmessage('supportiframe');" style="display:none"></iframe>
+    <form action="" target="supportiframe" method="post" onsubmit="return CheckPost_part();">
+  <table width="100%" class="table_form" style="background:#fff;">
+
+    <input type="hidden" name="pytoken" value="{yun:}$pytoken{/yun}">
+		{yun:}if $show.id{/yun}
+      <tr >
+        <th>招聘编号：</th>
+        <td>{yun:}$show.id{/yun}</td>
+      </tr>
+	  {yun:}/if{/yun}
+    <tr class="admin_table_trbg" >
+        <th>招聘名称：</th>
+        <td><input type="text" name="name" id="name" class="input-text" size="30" value="{yun:}$show.name{/yun}"></td>
+      </tr>
+<tr  > 
+        <th>工作类型：</th>
+        <td><select name="type" id="typeid">
+                {yun:}foreach from=$partdata.part_type key=j item=v{/yun}
+            <option value='{yun:}$v{/yun}' {yun:}if $show.type==$v{/yun}selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>
+                {yun:}/foreach{/yun}
+          </select></td>
+      </tr>
+		<tr class="admin_table_trbg">
+        <th width="120">兼职有效期：</th>
+        <td><link rel="stylesheet" href="{yun:}$config.sy_weburl{/yun}/js/datepicker/css/font-awesome.min.css" type="text/css">  
+		<script src="{yun:}$config.sy_weburl{/yun}/js/datepicker/foundation-datepicker.min.js"></script>
+          <input id="sdate" class="input-text" type="text" readonly size="15" value="{yun:}$show.sdate|date_format:'%Y-%m-%d'{/yun}" name="sdate"> 
+          <input id="edate" class="input-text" type="text" readonly size="15" value="{yun:}$show.edate|date_format:'%Y-%m-%d'{/yun}" name="edate" {yun:}if $show.edate==0{/yun}style="display:none"{yun:}/if{/yun}>
+          <script type="text/javascript">
+		  var checkin = $('#sdate').fdatepicker({
+			format: 'yyyy-mm-dd',startView:4,minView:2 
+		}).on('changeDate', function (ev) {
+			if (ev.date.valueOf() > checkout.date.valueOf()) {
+				var newDate = new Date(ev.date)
+				newDate.setDate(newDate.getDate() + 1);
+				checkout.update(newDate);
+			}
+			checkin.hide();
+			$('#edate')[0].focus();
+		}).data('datepicker');
+		var checkout = $('#edate').fdatepicker({
+			format: 'yyyy-mm-dd',startView:4,minView:2,
+			onRender: function (date) {
+				return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+			}
+		}).on('changeDate', function (ev) {
+			checkout.hide();
+		}).data('datepicker');    
+        </script>
+<input type="checkbox" value='1' id="timetype" name="timetype" class="" {yun:}if $show.edate==0{/yun}checked="checked"{yun:}/if{/yun} onclick="change()"/>长期招聘
+        </td>
+      </tr>
+      <tr >
+         <th width="120">工作时间：</th>
+         <td>
+                    <div id="worktimelist">{yun:}$worktime{/yun}</div>
+                    <div class="part_hour">
+                      <input class="part_addbth" type="button" onclick="addworktime()" value="添加">
+                    </div>
+         </td>
+      </tr>
+      <tr class="admin_table_trbg" >
+        <th width="120">招聘人数：</th>
+        <td><input type="text" name="number" id="number" class="input-text" size="10" value="{yun:}$show.number{/yun}"></td>
+      </tr>
+	  <tr >
+       <th width="120">性　　别：</th>
+        <td><select name="sex">
+        {yun:}foreach from=$partdata.part_sex key=j item=v{/yun}
+            <option value='{yun:}$v{/yun}' {yun:}if $show.sex==$v{/yun}selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>
+		{yun:}/foreach{/yun}
+          </select></td>
+      </tr>
+      <tr class="admin_table_trbg" >
+        <th width="120">薪　　水：</th>
+        <td><input type="text" name="salary" id="salary" class="input-text" size="10" value="{yun:}$show.salary{/yun}">
+        <select name="salary_type" id="salary_typeid">
+            {yun:}foreach from=$partdata.part_salary_type key=j item=v{/yun}
+            <option value='{yun:}$v{/yun}' {yun:}if $show.salary_type==$v{/yun}selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>
+            {yun:}/foreach{/yun}
+          </select></td>
+      </tr>
+      <tr  >
+        <th width="120">薪资结算：</th>
+        <td><select name="billing_cycle" id="billing_cycleid">
+            {yun:}foreach from=$partdata.part_billing_cycle key=j item=v{/yun}
+            <option value='{yun:}$v{/yun}' {yun:}if $show.billing_cycle==$v{/yun}selected{yun:}/if{/yun}>{yun:}$partclass_name[$v]{/yun}</option>
+            {yun:}/foreach{/yun}
+          </select></td>
+      </tr>
+
+      <tr class="admin_table_trbg">
+        <th>工作地点：</th>
+        <td><div class=textbox>
+            <select name="provinceid" id="provinceid" class="province" lid="cityid">
+              <option value="">请选择省份</option>
+                {yun:}foreach from=$city_index key=j item=v{/yun}
+              <option value='{yun:}$v{/yun}' {yun:}if $show.provinceid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                {yun:}/foreach{/yun}
+            </select>
+            <select name="cityid" size="1" id="cityid" class="province" lid="three_cityid">
+              <option value="">请选择城市</option>
+
+                {yun:}if $show.provinceid{/yun}
+                    {yun:}foreach from=$city_type[$show.provinceid] key=j item=v{/yun}
+              <option value='{yun:}$v{/yun}' {yun:}if $show.cityid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+                    {yun:}/foreach{/yun}
+                {yun:}/if{/yun}
+            </select>
+            <select name="three_cityid" size="1" id="three_cityid" {yun:}if !$show.three_cityid{/yun} style="display:none;"{yun:}/if{/yun}>
+            <option value="">请选择城市</option>
+            {yun:}if $show.cityid{/yun}
+            {yun:}foreach from=$city_type[$show.cityid] key=j item=v{/yun}
+            <option value='{yun:}$v{/yun}' {yun:}if $show.three_cityid==$v{/yun}selected{yun:}/if{/yun}>{yun:}$city_name[$v]{/yun}</option>
+            {yun:}/foreach{/yun}
+            {yun:}/if{/yun}
+            </select></div></td>
+      </tr>
+       <tr >
+        <th width="120">详细地址：</th>
+        <td ><input type="text" class="input-text" name="address" id="address" size="30" value="{yun:}$show.address{/yun}"> </td>
+      </tr>
+       <tr >
+        <th width="120"></th>
+        <td >
+                  <script src="http://api.map.baidu.com/api?v=1.4"></script> 
+                  <script type="text/javascript" src="{yun:}$config.sy_weburl{/yun}/js/map.js"></script>
+                  <div id="map_container" style="width:70%;height:300px;"></div>
+                  <input name="x" id="map_x" type="hidden" value="{yun:}$show.x{/yun}">
+                  <input name="y" id="map_y" type="hidden" value="{yun:}$show.y{/yun}">
+        </td>
+      </tr>
+   <tr class="具体要求" >
+        <th width="120">工作内容：</th>
+        <td><textarea  name="content" style="width:600px; height:200px;" id="content">{yun:}$show.content{/yun}</textarea></td>
+       </tr>
+
+      <tr class="admin_table_trbg">
+        <th width="120">报名截止：</th>
+        <td> 
+          <input id="deadline" class="input-text" type="text" readonly size="15" value="{yun:}$show.deadline|date_format:'%Y-%m-%d'{/yun}" name="deadline">
+          <script type="text/javascript">
+		  $('#deadline').fdatepicker({format: 'yyyy-mm-dd',startView:4,minView:2});  
+        </script></td>
+      </tr>
+     <tr >
+        <th width="120">联系人：</th>
+        <td><input type="text" class="input-text" name="linkman" id="linkman" size="15" value="{yun:}$show.linkman{/yun}"></td>
+      </tr>
+      <tr class="admin_table_trbg">
+        <th width="120">联系手机：</th>
+        <td><input type="text" class="input-text" name="linktel" id="linktel" size="15" value="{yun:}$show.linktel{/yun}"></td>
+        </tr>
+	  {yun:}if $show.id{/yun}
+      <tr  >
+        <th width="120">状　　态：</th>
+        <td>{yun:}if $show.state==1{/yun}
+
+		{yun:}if $show.edate<time() && $show.edate>0{/yun}
+		
+		<font color="orange">已过期</font>
+		
+		{yun:}else{/yun}
+
+		<font color="blue">已审核</font>
+		{yun:}/if{/yun}
+		{yun:}elseif $show.state==3{/yun}
+
+		<font color="red">未通过</font>
+
+		{yun:}else{/yun}
+		<font color="red">未审核</font>
+		
+		{yun:}/if{/yun}
+
+		</td>
+      </tr>
+	  {yun:}/if{/yun}
+	<tr>
+        <th width="120"></th>
+        <td>
+			{yun:}if $show.id{/yun}
+            <input type="hidden" name="lasturl" value="{yun:}$lasturl{/yun}">
+			<input type="hidden" name="id" value="{yun:}$show.id{/yun}">
+          <input class="admin_submit4" type="submit" name="update" value="&nbsp;修 改&nbsp;" />
+		  {yun:}else{/yun}
+          <input class="admin_submit4" type="submit" name="update" value="&nbsp;保 存&nbsp;" />{yun:}/if{/yun}
+		  </td>
+      </tr>
+  </table>
+   </form>
+</div>
+</div>
+
+<div id="partworktime" style="display:none;">
+  <div class="parttime_order fl">
+    <div class="parttime_items fl">
+      <div class="parttime_tit fl">开始时间：</div>
+      <div class="parttime_lists fl" style="z-index:10">
+        <input class="parttime_sel fl" value="请选择" type="button" id="shour" onclick="showtime('shour');">
+        <ul class="parttime_sel_m" id="shourlist" style="display:none">
+          <li><a href="javascript:check_time('00','shour');">00</a></li>
+          <li><a href="javascript:check_time('01','shour');">01</a></li>
+          <li><a href="javascript:check_time('02','shour');">02</a></li>
+          <li><a href="javascript:check_time('03','shour');">03</a></li>
+          <li><a href="javascript:check_time('04','shour');">04</a></li>
+          <li><a href="javascript:check_time('05','shour');">05</a></li>
+          <li><a href="javascript:check_time('06','shour');">06</a></li>
+          <li><a href="javascript:check_time('07','shour');">07</a></li>
+          <li><a href="javascript:check_time('08','shour');">08</a></li>
+          <li><a href="javascript:check_time('09','shour');">09</a></li>
+          <li><a href="javascript:check_time('10','shour');">10</a></li>
+          <li><a href="javascript:check_time('11','shour');">11</a></li>
+          <li><a href="javascript:check_time('12','shour');">12</a></li>
+          <li><a href="javascript:check_time('13','shour');">13</a></li>
+          <li><a href="javascript:check_time('14','shour');">14</a></li>
+          <li><a href="javascript:check_time('15','shour');">15</a></li>
+          <li><a href="javascript:check_time('16','shour');">16</a></li>
+          <li><a href="javascript:check_time('17','shour');">17</a></li>
+          <li><a href="javascript:check_time('18','shour');">18</a></li>
+          <li><a href="javascript:check_time('19','shour');">19</a></li>
+          <li><a href="javascript:check_time('20','shour');">20</a></li>
+          <li><a href="javascript:check_time('21','shour');">21</a></li>
+          <li><a href="javascript:check_time('22','shour');">22</a></li>
+          <li><a href="javascript:check_time('23','shour');">23</a></li>
+        </ul>
+      </div>
+      <span class="part_min fl">时</span>
+      <div class="parttime_lists fl" style="z-index:10">
+        <input class="parttime_sel fl" value="请选择" type="button" id="sminute" onclick="showtime('sminute');">
+        <ul class="parttime_sel_m" id="sminutelist" style="display:none">
+          <li><a href="javascript:check_time('00','sminute');">00</a></li>
+          <li><a href="javascript:check_time('10','sminute');">10</a></li>
+          <li><a href="javascript:check_time('20','sminute');">20</a></li>
+          <li><a href="javascript:check_time('30','sminute');">30</a></li>
+          <li><a href="javascript:check_time('40','sminute');">40</a></li>
+          <li><a href="javascript:check_time('50','sminute');">50</a></li>
+        </ul>
+      </div>
+      <span class="part_min fl">分</span> </div>
+    <div class="parttime_items fl">
+      <div class="parttime_tit fl">结束时间：</div>
+      <div class="parttime_lists fl" style="z-index:5">
+        <input class="parttime_sel fl" value="请选择" type="button" id="ehour" onclick="showtime('ehour');">
+        <ul class="parttime_sel_m" id="ehourlist" style="display:none">
+          <li><a href="javascript:check_time('00','ehour');">00</a></li>
+          <li><a href="javascript:check_time('01','ehour');">01</a></li>
+          <li><a href="javascript:check_time('02','ehour');">02</a></li>
+          <li><a href="javascript:check_time('03','ehour');">03</a></li>
+          <li><a href="javascript:check_time('04','ehour');">04</a></li>
+          <li><a href="javascript:check_time('05','ehour');">05</a></li>
+          <li><a href="javascript:check_time('06','ehour');">06</a></li>
+          <li><a href="javascript:check_time('07','ehour');">07</a></li>
+          <li><a href="javascript:check_time('08','ehour');">08</a></li>
+          <li><a href="javascript:check_time('09','ehour');">09</a></li>
+          <li><a href="javascript:check_time('10','ehour');">10</a></li>
+          <li><a href="javascript:check_time('11','ehour');">11</a></li>
+          <li><a href="javascript:check_time('12','ehour');">12</a></li>
+          <li><a href="javascript:check_time('13','ehour');">13</a></li>
+          <li><a href="javascript:check_time('14','ehour');">14</a></li>
+          <li><a href="javascript:check_time('15','ehour');">15</a></li>
+          <li><a href="javascript:check_time('16','ehour');">16</a></li>
+          <li><a href="javascript:check_time('17','ehour');">17</a></li>
+          <li><a href="javascript:check_time('18','ehour');">18</a></li>
+          <li><a href="javascript:check_time('19','ehour');">19</a></li>
+          <li><a href="javascript:check_time('20','ehour');">20</a></li>
+          <li><a href="javascript:check_time('21','ehour');">21</a></li>
+          <li><a href="javascript:check_time('22','ehour');">22</a></li>
+          <li><a href="javascript:check_time('23','ehour');">23</a></li>
+        </ul>
+      </div>
+      <span class="part_min fl">时</span>
+      <div class="parttime_lists fl" style="z-index:5">
+        <input class="parttime_sel fl" value="请选择" type="button" id="eminute" onclick="showtime('eminute');">
+        <ul class="parttime_sel_m" id="eminutelist" style="display:none">
+          <li><a href="javascript:check_time('00','eminute');">00</a></li>
+          <li><a href="javascript:check_time('10','eminute');">10</a></li>
+          <li><a href="javascript:check_time('20','eminute');">20</a></li>
+          <li><a href="javascript:check_time('30','eminute');">30</a></li>
+          <li><a href="javascript:check_time('40','eminute');">40</a></li>
+          <li><a href="javascript:check_time('50','eminute');">50</a></li>
+        </ul>
+      </div>
+      <span class="part_min fl">分</span> </div>
+    <input type="hidden" id="timeid" />
+    <div class="parttime_items fl">
+      <input class="parttime_bth" type="button" onclick="saveworktime();" value="保存">
+    </div>
+  </div>
+</div>
+<script>
+	var map=new BMap.Map("map_container");
+	setLocation('map_container',116.404,39.915,"map_x","map_y");
+	$(document).ready(function() {
+		{yun:}if ($show.x=="" || $show.y=="") && $show.address!=""{/yun}
+			$("#address").val("{yun:}$show.address{/yun}");
+			localsearch('{yun:}if $city_name[$show.cityid]{/yun}{yun:}$city_name[$show.cityid]{/yun}{yun:}else{/yun}全国{yun:}/if{/yun}');
+		{yun:}elseif $show.x!="" && $show.y!=""{/yun}
+			setLocation('map_container',{yun:}$show.x{/yun},{yun:}$show.y{/yun},"map_x","map_y");
+		{yun:}else{/yun}
+			//根据IP到城市开始
+			function myFun(result){
+				var cityName = result.name;
+				map.setCenter(cityName);
+			}
+			var myCity = new BMap.LocalCity();
+			myCity.get(myFun);
+			//根据IP到城市结结束
+		{yun:}/if{/yun}
+	});
+	var local ;
+	function getLocalResult(){
+		var address=$.trim($("#address").val());
+		var points=local.getResults();
+			var lngLat=points.getPoi(0).point;
+			setLocation('map_container',lngLat.lng,lngLat.lat,"map_x","map_y");
+	}
+	function localsearch(city){
+		if($("#address").val()==""){
+			layer.msg('请输入地址！', 2, 8);return false;
+		}
+		local = new BMap.LocalSearch(city, {
+		renderOptions: {
+			map: map,
+			panel : "r-result",
+			autoViewport: true,
+			selectFirstResult: false
+		  },onSearchComplete : getLocalResult
+		});
+		map.centerAndZoom(new BMap.Point(116.404, 39.915), 4);
+		local.search($("#address").val());
+	}
+	function setLocation(id,x,y,xid,yid){
+		var data=get_map_config();
+		var config=eval('('+data+')');
+		var rating,map_control_type,map_control_anchor;
+		if(!x && !y){x=config.map_x;y=config.map_y;}
+		var point = new BMap.Point(x,y);
+		var marker = new BMap.Marker(point);
+		var opts = {type:BMAP_NAVIGATION_CONTROL_LARGE}
+		map.enableScrollWheelZoom(true);
+		map.addControl(new BMap.NavigationControl(opts));
+		map.centerAndZoom(point, 15);
+		map.addOverlay(marker);
+		map.addEventListener("click",function(e){
+		   var info = new BMap.InfoWindow('', {width: 260});
+			var projection = this.getMapType().getProjection();
+			var lngLat = e.point;
+			document.getElementById(xid).value=lngLat.lng;
+			document.getElementById(yid).value=lngLat.lat;
+			map.clearOverlays();
+			var point = new BMap.Point(lngLat.lng,lngLat.lat);
+			var marker = new BMap.Marker(point);
+			map.addOverlay(marker);
+		});
+	}
+</script> 
+</body>
+</html>

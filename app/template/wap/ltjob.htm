@@ -1,0 +1,65 @@
+{yun:}include file="$wapstyle/header_cont.htm"{/yun}
+<script>wapurl="{yun:}url m=wap{/yun}";</script> 
+<script>var weburl="{yun:}$config.sy_weburl{/yun}"</script>
+<section>
+  <div class="user_contnet mt10">
+    <div class="user_contnet_box ">
+      <div class="com_show_t1">
+        <h2>{yun:}$job.job_name{/yun}</h2>
+        <span class="com_show_time">{yun:}$job.lastupdate|date_format:"%Y-%m-%d"{/yun}</span></div>
+      <div class="com_show_t2"><span class="com_show_xz cf60">{yun:}if $ltclass_name[$job.salary]==''{/yun}面议{yun:}else{/yun}￥{yun:}/if{/yun}{yun:}$ltclass_name[$job.salary]{/yun}</span><span class="com_show_l"><i class="user_map iconfont"></i>{yun:}$job.hits{/yun} </span></div>
+        {yun:}if $job.social|@count>0{/yun} 
+        <aside class="com_show_fl"> 
+        {yun:}foreach from=$job.social item=wlist{/yun} 
+        <span class="com_show_fl_s">{yun:}$ltclass_name[$wlist]{/yun}</span> 
+        {yun:}/foreach{/yun} 
+      </aside>
+        {yun:}/if{/yun}
+    </div>
+  </div>
+</section>
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box "> 
+      <aside class="com_show_firm_name">{yun:}$job.realname{/yun}</aside>
+      <span class="user_contnet_info_n">所属公司：</span> {yun:}if $job.usertype=='2'{/yun}<a href="{yun:}url m=wap c=company a=show id=$job.uid{/yun}">{yun:}$job.com_name{/yun}</a>{yun:}else{/yun}{yun:}$job.com_name{/yun}{yun:}/if{/yun}</div>
+  </div>
+</section>
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">基本信息</span></div>
+      <ul class="user_contnet_ul">
+        <li><span class="user_contnet_info_n">职位分类：</span>{yun:}$ltjob_name[$job.jobone]{/yun}、{yun:}$ltjob_name[$job.jobtwo]{/yun}</li>
+        <li><span class="user_contnet_info_n">工作地区：</span>{yun:}$city_name[$job.provinceid]{/yun}/{yun:}$city_name[$job.cityid]{/yun}</li>
+        <li><span class="user_contnet_info_n">工作经验：</span>{yun:}$ltclass_name[$job.exp]{/yun}</li>
+        <li><span class="user_contnet_info_n">学历要求：</span>{yun:}$ltclass_name[$job.edu]{/yun} </li>  
+        <li><span class="user_contnet_info_n">年龄要求：</span>{yun:}$ltclass_name[$job.age]{/yun}</li>
+        <li><span class="user_contnet_info_n">性别要求：</span>{yun:}$ltclass_name[$job.sex]{/yun}</li>
+        <li><span class="user_contnet_info_n">教育程度：</span>{yun:}$ltclass_name[$job.edu]{/yun}</li> 
+        <li><span class="user_contnet_info_n">到期时间: </span>{yun:}$job.edate|date_format:"%Y-%m-%d"{/yun}</li> 
+        <li class="com_show_li"><span class="user_contnet_info_n">语言要求：</span> {yun:}foreach from=$job.language item=wlists{/yun}  
+          {yun:}$ltclass_name[$wlists]{/yun}
+          {yun:}/foreach{/yun} </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">职位描述</span></div>
+      {yun:}$job.job_desc{/yun} </div>
+  </div>
+</section> 
+<section>
+  <div class="user_contnet">
+    <div class="user_contnet_box ">
+      <div class="wap_title"><span class="">任职资格</span></div>
+      {yun:}$job.eligible{/yun} </div>
+  </div>
+</section>  
+
+
+<div style='margin:0 auto;width:0px;height:0px;overflow:hidden;'><img src="{yun:}$config.sy_weburl{/yun}/{yun:}$config.sy_wx_sharelogo{/yun}"></div>
+{yun:}include file="$wapstyle/footer.htm"{/yun} 
